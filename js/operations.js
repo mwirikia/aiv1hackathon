@@ -142,8 +142,42 @@ function renderOperations() {
   if (redeployMatches.length > 0) {
     h += '<h3 class="ons-u-fs-r--b ons-u-mb-s">Skills-matched suggestions for pressured teams</h3>';
     for (const match of redeployMatches) {
+      var team = pressuredTeams.find(function(t) { return t.team === match.team; });
+      var teamOverMembers = team ? team.members.filter(function(m) { return m.total_allocation > 100; }) : [];
+      var teamOpenCount = team ? team.open.length : 0;
+      var bestCandidate = match.candidates[0];
+
       h += '<div class="ops-redeploy-card"><div class="ops-redeploy-card__header"><strong>' + match.team + '</strong> needs help ';
       h += '<span class="ons-status ons-status--' + pressureOns(match.pressureLevel) + '">' + match.pressureLevel + ' pressure (' + match.pressure + '%)</span></div>';
+
+      // Recommendation panel
+      h += '<div class="ons-panel ons-panel--info ons-panel--no-title ons-u-mb-s">';
+      h += '<span class="ons-panel__assistive-text ons-u-vh">Recommendation: </span>';
+      h += '<div class="ons-panel__body">';
+      h += '<p><strong>Recommendation:</strong> ';
+      if (bestCandidate) {
+        h += 'Consider moving <strong>' + bestCandidate.candidate.name + '</strong> ';
+        h += '(' + bestCandidate.candidate.team + ', ' + bestCandidate.candidate.spare + '% spare capacity) ';
+        h += 'to support <strong>' + match.team + '</strong>. ';
+        h += 'They have ' + bestCandidate.matchScore + ' matching skill' + (bestCandidate.matchScore !== 1 ? 's' : '') + ' ';
+        h += '(' + bestCandidate.matchingSkills.join(', ') + ').';
+      }
+      h += '</p><p style="margin-top:6px">';
+      h += '<strong>Why:</strong> ';
+      h += match.team + ' has ';
+      if (teamOverMembers.length > 0) h += teamOverMembers.length + ' over-allocated staff';
+      if (teamOverMembers.length > 0 && teamOpenCount > 0) h += ' and ';
+      if (teamOpenCount > 0) h += teamOpenCount + ' open ticket' + (teamOpenCount !== 1 ? 's' : '');
+      h += '. Average allocation is ' + (team ? team.avgAlloc : '?') + '%. ';
+      if (bestCandidate) {
+        h += bestCandidate.candidate.name + ' is currently at ' + bestCandidate.candidate.total_allocation + '% ';
+        h += 'and could absorb up to ' + bestCandidate.candidate.spare + '% additional work.';
+      }
+      h += '</p><p style="margin-top:6px">';
+      h += '<strong>Before acting:</strong> Check whether ' + (bestCandidate ? bestCandidate.candidate.name + "'s" : 'the candidate\'s') + ' current projects have upcoming deadlines, ';
+      h += 'and confirm the receiving team\'s specific needs match the available skills.';
+      h += '</p></div></div>';
+
       h += '<div class="ons-table-scrollable__content"><table class="ons-table"><thead class="ons-table__head"><tr class="ons-table__row">';
       ['Candidate', 'Current Team', 'Grade', 'Current Alloc', 'Spare', 'Matching Skills', 'Current Projects'].forEach(th => {
         h += '<th class="ons-table__header" scope="col">' + th + '</th>';

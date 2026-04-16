@@ -3,46 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Operations View — Corporate Services</title>
+  <title>Team Leader View — Corporate Services</title>
   <link rel="stylesheet" href="https://cdn.ons.gov.uk/sdc/design-system/73.3.0/css/main.css">
   <link rel="stylesheet" href="css/chat-widget.css">
   <style>
     html { scroll-behavior: smooth; }
-    /* KPI grid */
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
     .kpi-card { background: #fff; border: 1px solid #707071; padding: 16px; text-align: center; }
     .kpi-card .kpi-value { font-size: 2rem; font-weight: 700; line-height: 1.2; }
     .kpi-card .kpi-label { font-size: 0.875rem; color: #707071; }
-    .kpi-card--link { text-decoration: none; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s; }
-    .kpi-card--link:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); border-color: #206095; }
-    .kpi-card--link:focus { outline: 3px solid #fd0; outline-offset: 0; }
     .kpi-value--red { color: #d0021b; }
     .kpi-value--amber { color: #fe781f; }
     .kpi-value--green { color: #0f8243; }
 
-    /* Table row warn */
     .ons-table__row--warn .ons-table__cell { background: #fae1e1; }
 
-    /* At-risk ticket cards — not used on ops page, kept for shared styles */
-    .ops-ticket-card { display: none; }
-    .ops-ticket-card__header { display: none; }
-    .ops-ticket-card__ttl-bar { display: none; }
-    .ops-ttl-badge { display: none; }
-    .ops-ttl-track { display: none; }
+    /* Allocation bar */
+    .tl-alloc-bar { display: inline-flex; align-items: center; gap: 8px; }
+    .tl-alloc-bar__track { width: 100px; height: 12px; background: #e2e2e3; border-radius: 4px; overflow: hidden; display: block; position: relative; }
+    .tl-alloc-bar__fill { height: 100%; border-radius: 4px; min-width: 4px; display: block; }
+    .tl-alloc-bar__fill--green { background: #0f8243; }
+    .tl-alloc-bar__fill--amber { background: #fe781f; }
+    .tl-alloc-bar__fill--red { background: #d0021b; }
+    .tl-alloc-bar__marker { position: absolute; top: 0; bottom: 0; width: 2px; background: #222; opacity: 0.5; }
+    .tl-alloc-bar__label { font-size: 0.8125rem; font-weight: 700; white-space: nowrap; }
+    .tl-alloc-bar__label--red { color: #d0021b; }
+    .tl-alloc-bar__label--amber { color: #fe781f; }
+    .tl-alloc-bar__label--green { color: #0f8243; }
 
-    /* Pressure bar */
-    .ops-pressure-bar { display: inline-block; width: 80px; height: 10px; background: #e2e2e3; border-radius: 4px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
-    .ops-pressure-fill { display: block; height: 100%; border-radius: 4px; }
-
-    /* Redeployment card */
-    .ops-redeploy-card { background: #fff; border: 1px solid #707071; border-left: 5px solid #206095; padding: 16px 20px; margin-bottom: 16px; }
-    .ops-redeploy-card__header { font-size: 1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-    /* Skill match tag */
-    .ops-skill-match {
-      display: inline-block; background: #e8f0f8; border: 1px solid #206095;
-      color: #206095; font-size: 0.75rem; padding: 1px 8px; border-radius: 3px; margin: 1px 2px;
-    }
+    /* Select styling */
+    .ons-input--select { font-size: 1rem; padding: 8px 12px; border: 2px solid #222; font-family: inherit; min-width: 280px; }
+    .ons-input--select:focus { outline: 3px solid #fd0; }
   </style>
 </head>
 <body>
@@ -64,9 +56,9 @@
             <nav class="ons-navigation ons-navigation--main" aria-label="Main menu">
               <ul class="ons-navigation__list">
                 <li class="ons-navigation__item"><a class="ons-navigation__link" href="dashboard.html">Director's Dashboard</a></li>
-                <li class="ons-navigation__item ons-navigation__item--active"><a class="ons-navigation__link" href="operations.html">Operations View</a></li>
+                <li class="ons-navigation__item"><a class="ons-navigation__link" href="operations.html">Operations View</a></li>
                 <li class="ons-navigation__item"><a class="ons-navigation__link" href="tickets.html">Ticket View</a></li>
-                <li class="ons-navigation__item"><a class="ons-navigation__link" href="team-leader.html">Team Leader</a></li>
+                <li class="ons-navigation__item ons-navigation__item--active"><a class="ons-navigation__link" href="team-leader.html">Team Leader</a></li>
                 <li class="ons-navigation__item"><a class="ons-navigation__link" href="index.html">Staff Finder</a></li>
               </ul>
             </nav>
@@ -76,7 +68,7 @@
 
       <main id="main-content">
         <div class="ons-container ons-container--wide ons-u-mt-l">
-          <div id="ops-panel"></div>
+          <div id="team-leader-panel"></div>
         </div>
       </main>
 
@@ -95,12 +87,12 @@
 
   <script src="js/data.js"></script>
   <script src="js/insights.js"></script>
-  <script src="js/operations.js"></script>
+  <script src="js/team-leader.js"></script>
   <script src="js/chat-widget.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async function() {
       await loadData();
-      renderOperations();
+      renderTeamLeader();
     });
   </script>
   <script>

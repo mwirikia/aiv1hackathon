@@ -1,0 +1,189 @@
+# User Journeys — Workforce & Operational Intelligence
+
+## Users and views
+
+The challenge brief defines four users. Each maps to one or more views in the tool:
+
+| User | Primary view | Also uses |
+|------|-------------|-----------|
+| Director / senior leader | Director's Dashboard | Chat assistant (any page) |
+| Head of operations / resource manager | Operations View | Ticket View, Staff Finder |
+| Team leader | Staff Finder (team view) | Director's Dashboard, Operations View |
+| Operational team member | Ticket View | Operations View (automation candidates) |
+
+---
+
+## Journey 1: Director answers a minister's question
+
+**Scenario:** A minister asks "How many of your people are working on the new priority programme, and do you have the capacity to absorb more?"
+
+**Before this tool:** The director emails four team leaders. Two respond by end of day. One sends a spreadsheet with different categories. The director pieces together an approximate answer two days later.
+
+**With this tool:**
+
+1. Director opens **Director's Dashboard** (`dashboard.html`)
+2. The summary banner immediately shows total staff, average allocation, over-allocated count, and available capacity
+3. The KPI cards show the headline numbers — how many are over-allocated, how many have spare capacity
+4. The team allocation chart shows which teams are stretched and which have room
+5. If they need a specific answer, they click the **💬 chat button** and ask: *"Do we have capacity for a new programme?"*
+6. The chat responds with the number of staff with spare capacity, their combined FTE availability, and a table of names, teams, and skills
+7. They ask a follow-up: *"Show me project staffing"* — the chat lists every project with headcount and FTE
+8. The director has a clear, data-backed answer in under two minutes
+
+**Key features used:** Summary banner, KPI cards, team allocation chart, chat Q&A with deep links
+
+---
+
+## Journey 2: Head of operations prepares for quarterly review
+
+**Scenario:** The head of operations needs to understand where her teams are under pressure, which ticket categories are taking longest, and whether she can move two people onto a new project.
+
+**Before this tool:** She asks the IT service desk manager for a spreadsheet export. She spends an afternoon manipulating it. She checks the HR system for headcount and the project tracker for allocations — neither links to the other, and neither is up to date.
+
+**With this tool:**
+
+1. She opens **Operations View** (`operations.html`)
+2. The summary panel shows teams under pressure, over-allocated staff, and available redeployment candidates
+3. She clicks the **Teams Under Pressure** KPI card — it scrolls to the pressure rankings table showing each team's combined score from allocation, over-commitment, and ticket load
+4. She clicks **Available for Redeployment** — it scrolls to the redeployment planner showing all staff with spare capacity, their skills, and current projects
+5. Below the full list, she sees **skills-matched suggestions** for pressured teams — each with a recommendation panel explaining who to move, why, and what to check before acting
+6. She scrolls to **Automation Candidates** to see which ticket categories could be automated based on volume and resolution patterns
+7. She checks **Operational Workload by Team** for ticket volume and resolution performance
+8. For ticket detail, she navigates to **Ticket View** via the nav bar
+
+**Key features used:** Pressure rankings, redeployment planner with recommendations, automation candidates, workload analysis, clickable KPI cards
+
+---
+
+## Journey 3: Head of operations triages tickets
+
+**Scenario:** The head of operations wants to see which tickets are at risk of breaching their service level and which teams are handling them.
+
+**With this tool:**
+
+1. She opens **Ticket View** (`tickets.html`)
+2. The summary shows open tickets, overdue count, expiring count, and on-track count
+3. She sees **At-Risk Tickets** — cards for each overdue or expiring ticket with:
+   - TTL countdown bar showing time used vs limit
+   - Priority and category
+   - The assigned team's pressure level, average allocation, and over-allocated count
+4. She scrolls to **All Open Tickets** — a table sorted by urgency with TTL remaining, elapsed days, and team pressure status
+5. She checks **Resolution Performance by Team** to see which teams have overdue tickets and how their average resolution compares
+6. She uses the **💬 chat** to ask: *"Which categories take longest to resolve?"* — the chat responds with resolution times and links to the ticket view
+
+**Key features used:** TTL tracking, at-risk ticket cards, team pressure overlay, resolution performance table
+
+---
+
+## Journey 4: Team leader makes the case for more resource
+
+**Scenario:** A team leader knows his team is at capacity but cannot easily show it. His evidence is qualitative — his team tells him they are busy. He needs data to support the conversation with his director.
+
+**Before this tool:** He has no way to demonstrate workload quantitatively. His case relies on anecdote.
+
+**With this tool:**
+
+1. He opens **Staff Finder** (`index.html`) and clicks his team
+2. The team overview shows:
+   - Headcount, average allocation, over-allocated count, and open tickets
+   - A members table with allocation bars — each bar has a **100% capacity marker** making it immediately visible who is over the line
+   - Open tickets assigned to his team, sorted by priority
+3. He can see that multiple team members are above 100%, the team average is high, and there are open tickets adding to the load
+4. He shares the URL with his director — the data speaks for itself
+5. Alternatively, he asks the director to open the **Director's Dashboard** and type his team name into the chat — the response includes allocation data, over-committed staff, and open tickets with links back to the team view
+6. The director can cross-reference with the **Operations View** pressure rankings to see how this team compares to others
+
+**Key features used:** Team overview with allocation bars and 100% marker, open tickets, chat Q&A with team lookup
+
+---
+
+## Journey 5: Operational team member surfaces repetitive work
+
+**Scenario:** A team member processing access requests knows the process is repetitive and predictable. She wants this knowledge to surface in a form someone can act on.
+
+**With this tool:**
+
+1. Her manager opens **Operations View** (`operations.html`)
+2. The **Automation Candidates** section shows ticket categories ranked by volume and automation potential
+3. Access requests are flagged as high potential — high volume, predictable process, currently taking multiple days for what could be automated
+4. The manager can use this data to make a business case for automation investment
+5. Via the **💬 chat**, anyone can ask *"What could be automated?"* — the response lists categories with volume, resolution time, and automation potential
+
+**Key features used:** Automation candidates table, chat Q&A
+
+---
+
+## Journey 6: Director asks an ad-hoc question
+
+**Scenario:** The director is in a meeting and gets asked an unexpected question about skills risk or a specific team.
+
+**With this tool:**
+
+1. From any page, the director clicks the **💬 button** in the bottom-right corner
+2. They type: *"What are the skills risks?"*
+3. The chat responds with the number of skills held by only one person, flags those who are also over-allocated, and provides a table with deep links to each person's profile
+4. They ask: *"Tell me about IT Service Desk"*
+5. The chat responds with the team's allocation, over-committed staff, open tickets, and resolution time — with links to the team view in Staff Finder and the pressure rankings in Operations View
+6. The director has the answer without leaving the meeting
+
+**Key features used:** Floating chat widget, deep links across views
+
+---
+
+## Coverage against the challenge brief
+
+### Scenarios from the brief
+
+| Scenario | Covered | Where |
+|----------|---------|-------|
+| "How many people on the programme, can we absorb more?" | ✅ | Dashboard KPIs, chat Q&A (capacity, project staffing) |
+| "Where are teams under pressure before quarterly review?" | ✅ | Operations View — pressure rankings |
+| "Which teams handle most volume, which categories take longest?" | ✅ | Operations View — workload by team, Dashboard — resolution chart |
+| "Can I move two people without destabilising?" | ✅ | Operations View — redeployment planner with skills matching and recommendations |
+| "Team leader making the case for more resource" | ✅ | Staff Finder — team view with allocation bars, 100% markers, open tickets |
+| "Operational member surfacing repetitive processes" | ✅ | Operations View — automation candidates |
+
+### Directions from Hint 2
+
+| Direction | Covered | Where |
+|-----------|---------|-------|
+| The workforce question (over-commitment, capacity, skills concentration) | ✅ | Dashboard, Operations View, Staff Finder, chat |
+| The operational question (ticket volume, resolution times, backlogs) | ✅ | Ticket View, Operations View, Dashboard |
+| Joining them up (teams over-committed AND handling high ticket volume) | ✅ | Ticket View — team pressure overlay on tickets, Operations View — pressure score combines both |
+| The automation question (high-volume predictable categories) | ✅ | Operations View — automation candidates |
+
+### Users from the brief
+
+| User | Covered | Primary view |
+|------|---------|-------------|
+| Director / senior leader | ✅ | Director's Dashboard + chat |
+| Head of operations / resource manager | ✅ | Operations View + Ticket View |
+| Team leader | ✅ | Staff Finder (team view with quantitative evidence) |
+| Operational team member | ✅ | Ticket View + Operations View (automation candidates) |
+
+### Success criteria from the brief
+
+> "By the end of the day, you should be able to show a clear answer to at least one specific question a director would actually ask — presented in a format they could read in under two minutes."
+
+The Director's Dashboard answers multiple questions in under two minutes via the summary banner, KPI cards, and charts. The chat assistant can answer ad-hoc questions immediately with data-backed responses.
+
+> "If you can also explain what the data reveals, what you would recommend based on it, and what you would need to go further, that is a strong and credible demo."
+
+- **What the data reveals:** Dashboard recommendations, Operations pressure rankings, Ticket TTL tracking
+- **What we recommend:** Operations redeployment planner with actionable recommendations per team, automation candidates
+- **What we would need to go further:** Real-time data feeds from HR/project/ticketing systems, LLM-powered chat for more flexible Q&A, historical trend analysis
+
+---
+
+## What we would build next
+
+- **API layer** — serve the data and insights as REST endpoints so other tools can consume them
+- **LLM-powered chat** — replace pattern matching with a language model for more flexible, conversational Q&A
+- **Historical trends** — track allocation and ticket data over time to show whether pressure is increasing or decreasing
+- **Alerts** — notify managers when a team crosses a pressure threshold or a ticket breaches its TTL
+- **Export** — allow directors to export a briefing summary as a PDF or email-ready format
+- **Real-time data** — connect to live HR, project management, and ticketing systems instead of static JSON files
+
+---
+Version: 1.0
+Last updated: April 2026

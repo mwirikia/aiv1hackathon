@@ -36,12 +36,12 @@ function renderDashboard() {
 
   // KPIs
   h += '<div class="kpi-grid ons-u-mb-l">';
-  h += kpi(totalPeople, 'Total Staff', '');
-  h += kpi(avgAllocOrg + '%', 'Avg Allocation', allocColor(avgAllocOrg));
-  h += kpi(overAllocated.length, 'Over-allocated', 'red');
-  h += kpi(fullyFree.length, 'Available (≤60%)', 'green');
-  h += kpi(openTickets.length, 'Open Tickets', 'amber');
-  h += kpi(highOpen.length, 'High Priority Open', 'red');
+  h += kpi(totalPeople, 'Total Staff', '', 'index.html');
+  h += kpi(avgAllocOrg + '%', 'Avg Allocation', allocColor(avgAllocOrg), 'operations.html#team-pressure');
+  h += kpi(overAllocated.length, 'Over-allocated', 'red', 'operations.html#team-pressure');
+  h += kpi(fullyFree.length, 'Available (≤60%)', 'green', 'operations.html#redeployment-planner');
+  h += kpi(openTickets.length, 'Open Tickets', 'amber', 'tickets.html');
+  h += kpi(highOpen.length, 'High Priority Open', 'red', 'tickets.html#at-risk-tickets');
   h += '</div>';
 
   // Recommendations
@@ -105,8 +105,11 @@ function renderDashboard() {
   el.innerHTML = h;
 }
 
-function kpi(value, label, color) {
+function kpi(value, label, color, href) {
   const cls = color ? ' kpi-value--' + color : '';
+  if (href) {
+    return '<a class="kpi-card kpi-card--link" href="' + href + '"><div class="kpi-value' + cls + '">' + value + '</div><div class="kpi-label">' + label + '</div></a>';
+  }
   return '<div class="kpi-card"><div class="kpi-value' + cls + '">' + value + '</div><div class="kpi-label">' + label + '</div></div>';
 }
 

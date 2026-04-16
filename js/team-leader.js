@@ -187,9 +187,9 @@ function renderTeamDetail(teamName) {
   });
   h += '</tbody></table></div>';
 
-  // Skills concentration risk
+  // Single points of failure
   if (singleSkills.length > 0) {
-    h += '<h2 id="skills-risk" class="ons-u-fs-m ons-u-mb-s">Skills Concentration Risk <span style="font-weight:400;color:#707071;font-size:0.875rem">— single points of dependency in this team</span></h2>';
+    h += '<h2 id="skills-risk" class="ons-u-fs-m ons-u-mb-s">Single Points of Failure <span style="font-weight:400;color:#707071;font-size:0.875rem">— skills held by only one person in this team</span></h2>';
     h += '<div class="ons-table-scrollable__content ons-u-mb-l"><table class="ons-table">';
     h += '<thead class="ons-table__head"><tr class="ons-table__row">';
     ['Skill', 'Only Held By', 'Their Allocation', 'Also Over-allocated?'].forEach(function(th) {

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Director's Dashboard — Corporate Services</title>
   <link rel="stylesheet" href="https://cdn.ons.gov.uk/sdc/design-system/73.3.0/css/main.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
   <style>
     /* KPI grid using ONS spacing */
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
@@ -50,49 +51,6 @@
     /* Tag */
     .skill-tag { display: inline-block; background: #e2e2e3; font-size: 0.75rem; padding: 1px 8px; border-radius: 3px; margin: 1px 2px; }
 
-    /* Chat section */
-    .chat-section { background: #fff; border: 1px solid #707071; display: flex; flex-direction: column; height: 500px; }
-    .chat-header { background: #206095; color: #fff; padding: 14px 20px; font-size: 1rem; font-weight: 700; }
-    .chat-header__sub { font-weight: 400; font-size: 0.8125rem; opacity: 0.85; margin-left: 8px; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
-    .chat-msg { display: flex; flex-direction: column; }
-    .chat-msg--user { align-items: flex-end; }
-    .chat-msg--bot { align-items: flex-start; }
-    .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.875rem; line-height: 1.6; }
-    .msg-bubble--user { background: #206095; color: #fff; border-bottom-right-radius: 4px; }
-    .msg-bubble--bot { background: #f0f0f0; color: #222; border-bottom-left-radius: 4px; }
-
-    /* Chat table */
-    .chat-table-wrap { margin-top: 10px; overflow-x: auto; }
-    .chat-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; background: #fff; }
-    .chat-table th { text-align: left; padding: 5px 8px; border-bottom: 2px solid #222; background: #f0f0f0; font-size: 0.6875rem; }
-    .chat-table td { padding: 5px 8px; border-bottom: 1px solid #e2e2e3; }
-    .chat-table tr:hover { background: #e8f0f8; }
-    .chat-table-more { font-size: 0.6875rem; color: #707071; margin-top: 4px; }
-
-    /* Suggestion chips */
-    .suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-    .suggestion-chip {
-      background: #fff; border: 1px solid #206095; color: #206095;
-      font-size: 0.8125rem; padding: 4px 14px; border-radius: 16px;
-      cursor: pointer; font-family: inherit; transition: all 0.15s;
-    }
-    .suggestion-chip:hover { background: #206095; color: #fff; }
-
-    /* Typing dots */
-    .typing-indicator .dot {
-      display: inline-block; width: 7px; height: 7px;
-      background: #707071; border-radius: 50%; margin: 0 2px;
-      animation: bounce 1.2s infinite;
-    }
-    .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
-    .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
-
-    /* Chat input bar */
-    .chat-input-bar { display: flex; border-top: 1px solid #707071; padding: 10px 16px; gap: 8px; background: #fff; }
-    .chat-input-bar .ons-input { flex: 1; }
-
     /* Table row highlight */
     .ons-table__row--warn .ons-table__cell { background: #fae1e1; }
   </style>
@@ -130,23 +88,7 @@
           <!-- Dashboard KPIs and charts -->
           <div id="dashboard-panel"></div>
 
-          <!-- Chat interface -->
-          <div class="ons-u-mt-l ons-u-mb-xl">
-            <div class="chat-section">
-              <div class="chat-header">
-                Ask a question<span class="chat-header__sub">about your teams, capacity, workload, or tickets</span>
-              </div>
-              <div class="chat-messages" id="chat-messages"></div>
-              <div class="chat-input-bar">
-                <input id="chat-input" class="ons-input ons-input--text" type="text" placeholder="e.g. Do we have capacity for a new programme?" autocomplete="off">
-                <button id="chat-send" class="ons-btn">
-                  <span class="ons-btn__inner"><span class="ons-btn__text">Ask</span></span>
-                </button>
-              </div>
-            </div>
           </div>
-
-        </div>
       </main>
 
       <!-- Footer -->
@@ -166,8 +108,8 @@
   <script src="js/data.js"></script>
   <script src="js/insights.js"></script>
   <script src="js/dashboard.js"></script>
-  <script src="js/chat.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/chat-widget.js"></script>
   <script>
     (function() {
       var s = ['https://cdn.ons.gov.uk/sdc/design-system/73.3.0/scripts/main.js'];

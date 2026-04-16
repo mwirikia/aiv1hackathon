@@ -1,219 +1,147 @@
-# aiv1hackathon
-AI Hackathon V1 April 2026
+# Director's Dashboard — Workforce & Operational Intelligence
 
-## Project Overview
-We have chosen task 4
+AI Hackathon V1 April 2026 · Challenge 4: Knowing your own organisation
 
-# Full Challenge Breif
+## What this is
 
+A hybrid dashboard that gives directors and heads of operations an instant, data-backed picture of their organisation — without emailing four team leaders and waiting two days for a spreadsheet.
 
-# Challenge 4: Knowing your own organisation
+It combines workforce allocation data, operational ticket data, and org structure into a single view with:
+
+- **Executive dashboard** — KPI cards, team allocation charts, resolution time breakdowns, and flagged recommendations
+- **Natural language Q&A** — ask questions like *"Do we have capacity for a new programme?"* and get immediate answers with supporting tables
+
+## How to run
+
+The app is pure client-side HTML/JS with no build step. It just needs a local web server because it loads JSON data via `fetch()`.
+
+### Option 1: Python (quickest)
+
+```bash
+cd aiv1hackathon
+python3 -m http.server 8080
+```
+
+Open [http://localhost:8080/dashboard.html](http://localhost:8080/dashboard.html)
+
+### Option 2: Node.js
+
+```bash
+cd aiv1hackathon
+npx serve .
+```
+
+Open the URL shown in the terminal (usually [http://localhost:3000/dashboard.html](http://localhost:3000/dashboard.html))
+
+### Option 3: PHP
+
+```bash
+cd aiv1hackathon
+php -S localhost:8080
+```
+
+Open [http://localhost:8080/dashboard.html](http://localhost:8080/dashboard.html)
+
+### Option 4: VS Code Live Server
+
+1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
+2. Right-click `dashboard.html` → **Open with Live Server**
+
+### Pages
+
+| URL | Description |
+|-----|-------------|
+| `/dashboard.html` | Director's Dashboard — hybrid KPI + chat interface |
+| `/index.html` | Staff & Services Finder — search people, teams, skills, tickets |
+
+## Project structure
+
+```
+aiv1hackathon/
+├── data/
+│   ├── workforce.json      # 25 employee records across 6 teams
+│   ├── tickets.json        # 50 operational tickets
+│   └── org-chart.json      # Organisation structure
+├── js/
+│   ├── data.js             # Data loading and derived metrics
+│   ├── insights.js         # Q&A engine — pattern matching for natural language questions
+│   ├── dashboard.js        # KPI and chart rendering (ONS Design System)
+│   ├── chat.js             # Chat interface with typing indicator and suggestion chips
+│   └── app.js              # Bootstrap
+├── dashboard.html          # Hybrid dashboard + chat (ONS Design System)
+├── index.html              # Staff & Services Finder
+└── README.md
+```
+
+## Design system
+
+The dashboard uses the [ONS Design System](https://service-manual.ons.gov.uk/design-system) (v73.3.0) loaded via CDN. Components used include:
+
+- Layout: `ons-container`, `ons-grid`, `ons-grid__col`
+- Header/Footer: `ons-header--internal`, `ons-footer`
+- Panels: `ons-panel--info`
+- Tables: `ons-table`, `ons-table__head`, `ons-table__body`, `ons-table__row`
+- Buttons: `ons-btn`
+- Inputs: `ons-input`
+- Status badges: `ons-status--error`, `ons-status--success`, `ons-status--pending`
+- Typography and spacing utilities: `ons-u-fs-m`, `ons-u-mt-l`, etc.
+
+## What the data reveals
+
+- **8 of 25 staff** are allocated above 100% — this is spread across nearly every team
+- **Every team lead** is over-allocated (20% team management on top of full project loads)
+- **2 staff** have significant spare capacity (≤60%) and could absorb new work
+- **7 tickets** remain open, including high-priority infrastructure and HR issues
+- **Procurement requests** take ~28 days avg to resolve — the slowest category
+- **Multiple skills** are held by only one person, creating single points of failure
+- **IT Service Desk** is simultaneously over-committed on project work and handling the highest ticket volume — the biggest pressure point
+
+## Example questions for the chat
+
+- "Give me a summary"
+- "Do we have capacity for a new programme?"
+- "Which teams are under pressure?"
+- "Who is over-allocated?"
+- "Who could I redeploy?"
+- "What are the skills risks?"
+- "Show open tickets"
+- "Tell me about Digital Services"
+- "What could be automated?"
+- "How many people work here?"
+- "Show me project staffing"
+- "Which categories take longest to resolve?"
+
+## Tech stack
+
+- Vanilla HTML, CSS, JavaScript — no frameworks, no build tools
+- ONS Design System v73.3.0 (CDN)
+- Client-side pattern-matching Q&A (no LLM API required)
+- Reads JSON data files directly via `fetch()`
+
+---
+
+## Challenge brief
+
+### Challenge 4: Knowing your own organisation
 
 A minister asks a director a question: how many of your people are working on the new priority programme, and do you have the capacity to absorb more? The director does not know the answer. They send an email to four team leaders. Two respond by end of day. One sends a spreadsheet that uses different categories to another. The director pieces together an approximate answer and sends it back two days later.
 
 This is not unusual. Departments hold significant information about their people, their projects, and their operational workload — but it is distributed across systems that were not designed to work together, and it is rarely accessible in a form that allows leaders to act on it quickly.
 
-## The experience today
-
-A head of operations needs to understand where her teams are under pressure before a quarterly review. She knows IT support tickets have been rising, but she does not know which teams are handling the most volume or which categories are taking the longest to resolve. She asks the IT service desk manager, who sends her a spreadsheet exported from the ticketing system. She has to manipulate it to get the view she needs. It takes an afternoon.
-
-She also wants to know whether she has capacity to move two people onto a new project without destabilising existing commitments. She has a rough idea from memory, but she is not certain. The HR system shows headcount but not project allocation. The project tracker shows allocations but does not link to the HR system. The answer is spread across both, and neither is up to date.
-
-At the same time, a team leader is trying to make the case to his director for more resource. He knows his team is at capacity, but he cannot easily show it in a way that will be convincing. His evidence is qualitative — his team tells him they are busy. He does not have data to support the conversation.
-
-## The users
-
-**The director or senior leader** — needs to answer questions from ministers, permanent secretaries, and senior officials. They need a clear, reliable picture of their organisation — not a spreadsheet they have to interpret. When a new priority emerges, they need to know quickly whether they have the capacity to respond.
-
-**The head of operations or resource manager** — responsible for workforce allocation and operational workload across multiple teams. They need to identify pressure points before they become crises, and to make decisions about redeployment and prioritisation based on evidence rather than instinct.
-
-**The team leader** — wants to demonstrate the workload and capacity of their team, make the case for resource when needed, and understand where their team is carrying risk due to single points of dependency.
-
-**The operational team member** — processing high volumes of requests, many of which follow identical or near-identical patterns. They know which processes are repetitive and which take far longer than they should, but that knowledge rarely surfaces in a form that anyone can act on.
-
-## Why this matters
-
-Resource allocation in government is rarely visible in one place. Senior leaders making staffing decisions often do not have a complete picture. Teams can be under-resourced on critical projects while others have capacity that is not easily visible across the organisation. When a new priority emerges, identifying who could be redeployed without disrupting existing work typically requires a significant amount of manual effort.
-
-This is not a data science problem. The data usually exists somewhere. The problem is that no one has joined it up and made it accessible to the people who need it. A tool that gives a director a clear, reliable answer to even one important question would be more useful than what most departments have today.
-
-## Data provided
-
-A starter dataset is available in the hackathon repository at `challenge-4/`:
+### Data provided
 
 | File | Description |
 |------|-------------|
-| `workforce.json` | 25 synthetic employee records across 6 teams, with roles, grades, skills, and project allocations — including deliberate patterns of over-allocation, under-allocation, and skills concentration |
-| `tickets.json` | 50 synthetic operational tickets across IT, Finance, HR, and Commercial, with categories, priorities, assigned teams, and resolution dates |
-| `org-chart.json` | Organisation structure for a fictional corporate services directorate with 6 teams and reporting lines |
+| `workforce.json` | 25 synthetic employee records across 6 teams, with roles, grades, skills, and project allocations |
+| `tickets.json` | 50 synthetic operational tickets across IT, Finance, HR, and Commercial |
+| `org-chart.json` | Organisation structure for a fictional corporate services directorate with 6 teams |
 
-The starter data is enough to build and demo against. You will find patterns worth exploring — look for them before you start building. If you need more records, use your AI coding tool to generate them using the same schema. See Hint 3 for a generation prompt.
+### Useful references
 
-### Sample workforce record structure
-
-Each record in `workforce.json` follows this structure:
-
-```json
-{
-  "employee_id": "EMP-0042",
-  "name": "Priya Sharma",
-  "grade": "SEO",
-  "role": "Software Developer",
-  "team": "Digital Services",
-  "team_lead": "EMP-0012",
-  "skills": ["Python", "React", "AWS", "data engineering"],
-  "allocations": [
-    {
-      "project": "Benefits Platform Rebuild",
-      "percentage": 60
-    },
-    {
-      "project": "Data Migration Phase 2",
-      "percentage": 30
-    }
-  ],
-  "total_allocation": 90,
-  "location": "Manchester",
-  "start_date": "2023-06-15"
-}
-```
-
-### Sample ticket record structure
-
-```json
-{
-  "ticket_id": "TKT-2026-01542",
-  "category": "access_request",
-  "priority": "medium",
-  "assigned_team": "IT Service Desk",
-  "created_date": "2026-02-14",
-  "resolved_date": "2026-02-18",
-  "status": "resolved",
-  "description": "New starter requires access to SharePoint, Jira, and the HR portal."
-}
-```
-
-### Sample org chart structure
-
-```json
-{
-  "team": "Digital Services",
-  "team_lead": "EMP-0012",
-  "parent_team": "Technology Directorate",
-  "headcount": 14,
-  "members": ["EMP-0042", "EMP-0043", "EMP-0044"]
-}
-```
+- [Civil Service statistics](https://www.gov.uk/government/collections/civil-service-statistics)
+- [ONS public sector employment](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/publicsectorpersonnel)
+- [ONS Design System](https://service-manual.ons.gov.uk/design-system)
 
 ---
-
-<details>
-<summary><strong>Hint 1 — Explore the problem: what does a director actually need to know?</strong></summary>
-
-Before writing any code, open the data files and look at them. Then use your AI coding tool to understand what questions are worth answering.
-
-```
-I am designing a workforce and operational visibility tool for
-a government department. What questions would a director or head
-of operations most want answered about their people and workload?
-What decisions could they make more effectively with reliable
-data?
-```
-
-```
-Here is a sample of workforce allocation data: [paste a few
-records from workforce.json]. What patterns might indicate a
-problem? What would over-commitment look like? What would a
-skills concentration risk look like?
-```
-
-```
-Here is a sample of support ticket data: [paste a few records
-from tickets.json]. What questions could this data answer for
-an operations manager? What would long resolution times in a
-particular category suggest?
-```
-
-</details>
-
-<details>
-<summary><strong>Hint 2 — Possible directions and design questions</strong></summary>
-
-Once you understand the questions that matter, you have a choice about where to focus. The data covers two different areas — workforce allocation and operational tickets — and they can be used separately or together.
-
-**The workforce question.** The allocation data can tell you which teams are over-committed, which have capacity, where skills are concentrated in a single person, and whether the right people are on the right projects. Answering any one of these well, clearly, in a format a non-technical director can act on, is a strong outcome.
-
-**The operational question.** The ticket data can tell you which teams are carrying the most operational load, which categories of request take the longest to resolve, and where backlogs are building. This is a different kind of visibility from the workforce data, but it reflects the same underlying challenge: leaders making decisions without a clear picture of where the pressure actually is.
-
-**Joining them up.** The most interesting analysis comes from combining both: which teams are simultaneously over-committed on project work and handling high ticket volumes? Where is operational demand highest relative to available capacity?
-
-**The automation question.** If you look at the ticket data and find patterns — categories of request that appear frequently and follow a predictable process — there is a further question: which of these processes would be good candidates for automation, and why? Making that case from data, rather than instinct, is a harder but more valuable output.
-
-Think carefully about the format. A director needs to read your output in under two minutes. That shapes everything about how you present the data.
-
-</details>
-
-<details>
-<summary><strong>Hint 3 — A starting point with specific prompts</strong></summary>
-
-If your team wants a concrete direction, here is one approach.
-
-To generate more records if you need them:
-
-```
-Here is the structure of a workforce record: [paste one record
-from workforce.json]. Generate 50 more synthetic employee
-records across the same 6 teams. Include a realistic mix:
-some over-allocated (total above 100%), some under-allocated
-(total below 70%), and at least 3 people whose skills appear
-in no other team.
-```
-
-Start by exploring the data:
-
-```
-I have a JSON file of employee records with team, grade, skills,
-and project allocations as percentages. Analyse this data and
-tell me: how many employees are over-allocated (above 100%),
-how many are under-allocated (below 70%), which teams have the
-highest average allocation, and which skills appear in only one
-team.
-```
-
-Then build a clear answer to one question:
-
-```
-I have workforce allocation data. Build a simple dashboard that
-answers: "Which teams are over-committed?" Show a bar chart of
-average allocation by team, highlight teams above 100%, and
-list the individuals who are over-allocated and the projects
-causing it. Use a simple charting library. Make it readable for
-a non-technical audience.
-```
-
-If you want to bring in the ticket data:
-
-```
-I have support tickets with category, assigned team, created
-date, and resolved date. Calculate average resolution time by
-team and category. Identify the team-category combinations with
-the longest average resolution time and flag any that are still
-open.
-```
-
-From there: what would a director need to see to decide whether to redeploy resource? What are the top three things you would recommend based on what the data shows?
-
-</details>
-
-## What does a good outcome look like?
-
-By the end of the day, you should be able to show a clear answer to at least one specific question a director would actually ask — presented in a format they could read in under two minutes. If you can also explain what the data reveals, what you would recommend based on it, and what you would need to go further, that is a strong and credible demo.
-
-## Useful references
-
-- Civil Service statistics — https://www.gov.uk/government/collections/civil-service-statistics — published workforce data from the Cabinet Office
-- ONS public sector employment — https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/publicsectorpersonnel — national employment statistics
-
----
-Version: 1.1
+Version: 2.0
 Last updated: April 2026

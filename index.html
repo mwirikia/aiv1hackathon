@@ -183,9 +183,9 @@
 
   async function loadFinderData() {
     const [people, tickets, orgChart] = await Promise.all([
-      fetch('data/workforce.json').then(r => r.json()),
-      fetch('data/tickets.json').then(r => r.json()),
-      fetch('data/org-chart.json').then(r => r.json()),
+      fetch('data/workforce.json', { cache: 'no-store' }).then(r => r.json()),
+      fetch('data/tickets.json', { cache: 'no-store' }).then(r => r.json()),
+      fetch('data/org-chart.json', { cache: 'no-store' }).then(r => r.json()),
     ]);
     DATA = { people, tickets, orgChart };
     for (const p of people) peopleById.set(p.employee_id, p);
@@ -249,7 +249,7 @@
         html += `<a class="team-card" href="#/team/${encodeURIComponent(name)}">
           <h3>${name}</h3>
           <div class="meta">${t.headcount} people</div>
-          <span class="ons-status ons-status--${t.openTicketCount === 0 ? 'success' : 'pending'}">${t.openTicketCount} open ticket${t.openTicketCount !== 1 ? 's' : ''}</span>
+          <span class="ons-status ons-status--${t.openTicketCount === 0 ? 'success' : 'pending'}">${t.openTicketCount} open / ${t.tickets.length} total tickets</span>
         </a>`;
       }
       html += '</div>';
@@ -286,7 +286,7 @@
           html += `<a class="team-card" href="#/team/${encodeURIComponent(name)}">
             <h3>${name}</h3>
             <div class="meta">${t.headcount} people</div>
-            <span class="ons-status ons-status--${t.openTicketCount === 0 ? 'success' : 'pending'}">${t.openTicketCount} open ticket${t.openTicketCount !== 1 ? 's' : ''}</span>
+            <span class="ons-status ons-status--${t.openTicketCount === 0 ? 'success' : 'pending'}">${t.openTicketCount} open / ${t.tickets.length} total tickets</span>
           </a>`;
         }
         html += '</div></div>';

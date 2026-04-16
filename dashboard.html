@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Director's Dashboard — Corporate Services</title>
+  <link rel="stylesheet" href="https://cdn.ons.gov.uk/sdc/design-system/73.3.0/css/main.css">
+  <style>
+    /* KPI grid using ONS spacing */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+    .kpi-card { background: #fff; border: 1px solid #707071; padding: 16px; text-align: center; }
+    .kpi-card .kpi-value { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+    .kpi-card .kpi-label { font-size: 0.875rem; color: #707071; }
+    .kpi-value--red { color: #d0021b; }
+    .kpi-value--amber { color: #fe781f; }
+    .kpi-value--green { color: #0f8243; }
+
+    /* Horizontal bar charts */
+    .h-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .h-bar__label { width: 140px; font-size: 0.8125rem; text-align: right; flex-shrink: 0; }
+    .h-bar__track { flex: 1; height: 20px; background: #e2e2e3; border-radius: 3px; overflow: hidden; }
+    .h-bar__fill { height: 100%; border-radius: 3px; display: flex; align-items: center; padding-left: 8px; font-size: 0.75rem; font-weight: 700; color: #fff; }
+    .h-bar__val { width: 40px; font-size: 0.8125rem; font-weight: 700; flex-shrink: 0; }
+
+    /* Chart row */
+    .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 740px) { .chart-row { grid-template-columns: 1fr; } }
+    .chart-box { background: #fff; border: 1px solid #707071; padding: 16px; }
+    .chart-box h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+
+    /* Recommendation cards */
+    .rec { background: #fff; border-left: 4px solid #206095; padding: 16px 20px; margin-bottom: 10px; }
+    .rec--urgent { border-left-color: #d0021b; }
+    .rec__title { font-weight: 700; font-size: 0.9375rem; margin-bottom: 4px; }
+    .rec__body { font-size: 0.875rem; color: #707071; }
+
+    /* Allocation bar inline */
+    .alloc-bar { display: inline-flex; align-items: center; gap: 6px; }
+    .alloc-bar__track { width: 80px; height: 8px; background: #e2e2e3; border-radius: 4px; overflow: hidden; }
+    .alloc-bar__fill { height: 100%; border-radius: 4px; }
+    .alloc-bar__fill--green { background: #0f8243; }
+    .alloc-bar__fill--amber { background: #fe781f; }
+    .alloc-bar__fill--red { background: #d0021b; }
+    .alloc-bar__label { font-size: 0.8125rem; font-weight: 700; }
+    .alloc-bar__label--red { color: #d0021b; }
+    .alloc-bar__label--amber { color: #fe781f; }
+    .alloc-bar__label--green { color: #0f8243; }
+
+    /* Tag */
+    .skill-tag { display: inline-block; background: #e2e2e3; font-size: 0.75rem; padding: 1px 8px; border-radius: 3px; margin: 1px 2px; }
+
+    /* Chat section */
+    .chat-section { background: #fff; border: 1px solid #707071; display: flex; flex-direction: column; height: 500px; }
+    .chat-header { background: #206095; color: #fff; padding: 14px 20px; font-size: 1rem; font-weight: 700; }
+    .chat-header__sub { font-weight: 400; font-size: 0.8125rem; opacity: 0.85; margin-left: 8px; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .chat-msg { display: flex; flex-direction: column; }
+    .chat-msg--user { align-items: flex-end; }
+    .chat-msg--bot { align-items: flex-start; }
+    .msg-bubble { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.875rem; line-height: 1.6; }
+    .msg-bubble--user { background: #206095; color: #fff; border-bottom-right-radius: 4px; }
+    .msg-bubble--bot { background: #f0f0f0; color: #222; border-bottom-left-radius: 4px; }
+
+    /* Chat table */
+    .chat-table-wrap { margin-top: 10px; overflow-x: auto; }
+    .chat-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; background: #fff; }
+    .chat-table th { text-align: left; padding: 5px 8px; border-bottom: 2px solid #222; background: #f0f0f0; font-size: 0.6875rem; }
+    .chat-table td { padding: 5px 8px; border-bottom: 1px solid #e2e2e3; }
+    .chat-table tr:hover { background: #e8f0f8; }
+    .chat-table-more { font-size: 0.6875rem; color: #707071; margin-top: 4px; }
+
+    /* Suggestion chips */
+    .suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .suggestion-chip {
+      background: #fff; border: 1px solid #206095; color: #206095;
+      font-size: 0.8125rem; padding: 4px 14px; border-radius: 16px;
+      cursor: pointer; font-family: inherit; transition: all 0.15s;
+    }
+    .suggestion-chip:hover { background: #206095; color: #fff; }
+
+    /* Typing dots */
+    .typing-indicator .dot {
+      display: inline-block; width: 7px; height: 7px;
+      background: #707071; border-radius: 50%; margin: 0 2px;
+      animation: bounce 1.2s infinite;
+    }
+    .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+    /* Chat input bar */
+    .chat-input-bar { display: flex; border-top: 1px solid #707071; padding: 10px 16px; gap: 8px; background: #fff; }
+    .chat-input-bar .ons-input { flex: 1; }
+
+    /* Table row highlight */
+    .ons-table__row--warn .ons-table__cell { background: #fae1e1; }
+  </style>
+</head>
+<body>
+  <div class="ons-page">
+    <div class="ons-page__content">
+
+      <!-- Header -->
+      <header class="ons-header ons-header--internal" role="banner">
+        <div class="ons-header__top">
+          <div class="ons-container ons-container--wide">
+            <div class="ons-header__grid-top ons-grid ons-grid-flex ons-grid-flex--between ons-grid-flex--vertical-center ons-grid-flex--no-wrap ons-grid--gutterless">
+              <div class="ons-grid__col ons-col-auto">
+                <div class="ons-header__title">Director's Dashboard</div>
+              </div>
+              <div class="ons-grid__col ons-col-auto">
+                <a href="index.html" style="color:#fff;font-size:0.875rem;text-decoration:underline;">← Staff Finder</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ons-header__main">
+          <div class="ons-container ons-container--wide">
+            <div class="ons-header__title">Directorate of Corporate Services</div>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <div class="ons-container ons-container--wide ons-u-mt-l">
+
+          <!-- Dashboard KPIs and charts -->
+          <div id="dashboard-panel"></div>
+
+          <!-- Chat interface -->
+          <div class="ons-u-mt-l ons-u-mb-xl">
+            <div class="chat-section">
+              <div class="chat-header">
+                Ask a question<span class="chat-header__sub">about your teams, capacity, workload, or tickets</span>
+              </div>
+              <div class="chat-messages" id="chat-messages"></div>
+              <div class="chat-input-bar">
+                <input id="chat-input" class="ons-input ons-input--text" type="text" placeholder="e.g. Do we have capacity for a new programme?" autocomplete="off">
+                <button id="chat-send" class="ons-btn">
+                  <span class="ons-btn__inner"><span class="ons-btn__text">Ask</span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="ons-footer">
+        <div class="ons-footer__body ons-page__footer">
+          <div class="ons-container ons-container--wide">
+            <div class="ons-footer__license ons-u-mb-l">
+              Prototype — AI Hackathon V1 April 2026 · Challenge 4: Knowing your own organisation
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/insights.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    (function() {
+      var s = ['https://cdn.ons.gov.uk/sdc/design-system/73.3.0/scripts/main.js'];
+      var c = document.createElement('script');
+      if (!('noModule' in c)) { for (var i = 0; i < s.length; i++) { s[i] = s[i].replace('.js', '.es5.js'); } }
+      for (var i = 0; i < s.length; i++) { var e = document.createElement('script'); e.src = s[i]; document.body.appendChild(e); }
+    })();
+  </script>
+</body>
+</html>

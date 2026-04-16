@@ -316,7 +316,7 @@
   <header class="header">
     <div class="header__inner">
       <h1>Directorate of Corporate Services</h1>
-      <p>Staff & Services Finder</p>
+      <p>Staff & Services Finder &nbsp;|&nbsp; <a href="dashboard.html" style="color:#b1b4b6;font-size:14px">Director's Dashboard →</a></p>
     </div>
   </header>
   <main class="container">
@@ -332,9 +332,9 @@
   // ── Data loading ──
   async function loadData() {
     const [people, tickets, orgChart] = await Promise.all([
-      fetch('workforce.json').then(r => r.json()),
-      fetch('tickets.json').then(r => r.json()),
-      fetch('org-chart.json').then(r => r.json()),
+      fetch('data/workforce.json').then(r => r.json()),
+      fetch('data/tickets.json').then(r => r.json()),
+      fetch('data/org-chart.json').then(r => r.json()),
     ]);
     DATA = { people, tickets, orgChart };
 

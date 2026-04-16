@@ -35,13 +35,14 @@
     .rec__body { font-size: 0.875rem; color: #707071; }
 
     /* Allocation bar inline */
-    .alloc-bar { display: inline-flex; align-items: center; gap: 6px; }
-    .alloc-bar__track { width: 80px; height: 8px; background: #e2e2e3; border-radius: 4px; overflow: hidden; }
-    .alloc-bar__fill { height: 100%; border-radius: 4px; }
+    .alloc-bar { display: inline-flex; align-items: center; gap: 8px; }
+    .alloc-bar__track { width: 100px; height: 12px; background: #e2e2e3; border-radius: 4px; overflow: hidden; display: block; position: relative; }
+    .alloc-bar__fill { height: 100%; border-radius: 4px; min-width: 4px; display: block; }
     .alloc-bar__fill--green { background: #0f8243; }
     .alloc-bar__fill--amber { background: #fe781f; }
     .alloc-bar__fill--red { background: #d0021b; }
-    .alloc-bar__label { font-size: 0.8125rem; font-weight: 700; }
+    .alloc-bar__marker { position: absolute; top: 0; bottom: 0; width: 2px; background: #222; opacity: 0.5; }
+    .alloc-bar__label { font-size: 0.8125rem; font-weight: 700; white-space: nowrap; }
     .alloc-bar__label--red { color: #d0021b; }
     .alloc-bar__label--amber { color: #fe781f; }
     .alloc-bar__label--green { color: #0f8243; }

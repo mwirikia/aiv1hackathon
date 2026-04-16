@@ -9,8 +9,15 @@ function renderDashboard() {
   function colorHex(c) { return c === 'red' ? '#d0021b' : c === 'amber' ? '#fe781f' : '#0f8243'; }
   function barInline(pct) {
     const c = allocColor(pct);
-    const w = Math.min(pct, 130);
-    return '<span class="alloc-bar"><span class="alloc-bar__track"><span class="alloc-bar__fill alloc-bar__fill--' + c + '" style="width:' + (w * 100 / 130) + '%"></span></span><span class="alloc-bar__label alloc-bar__label--' + c + '">' + pct + '%</span></span>';
+    const w = Math.min(Math.round(pct * 100 / 120), 100);
+    const markerPos = Math.round(100 * 100 / 120);
+    return '<span class="alloc-bar">' +
+      '<span class="alloc-bar__track">' +
+        '<span class="alloc-bar__fill alloc-bar__fill--' + c + '" style="width:' + w + '%"></span>' +
+        '<span class="alloc-bar__marker" style="left:' + markerPos + '%" title="100% capacity"></span>' +
+      '</span>' +
+      '<span class="alloc-bar__label alloc-bar__label--' + c + '">' + pct + '%</span>' +
+    '</span>';
   }
   function fmtCat(c) { return c.replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase()); }
 

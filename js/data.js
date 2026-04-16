@@ -17,9 +17,9 @@ const Store = {
 
 async function loadData() {
   const [people, tickets, orgChart] = await Promise.all([
-    fetch('data/workforce.json').then(r => r.json()),
-    fetch('data/tickets.json').then(r => r.json()),
-    fetch('data/org-chart.json').then(r => r.json()),
+    fetch('data/workforce.json', { cache: 'no-store' }).then(r => r.json()),
+    fetch('data/tickets.json', { cache: 'no-store' }).then(r => r.json()),
+    fetch('data/org-chart.json', { cache: 'no-store' }).then(r => r.json()),
   ]);
 
   Store.raw = { people, tickets, orgChart };

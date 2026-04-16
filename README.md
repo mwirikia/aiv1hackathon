@@ -59,6 +59,7 @@ Open [http://localhost:8080/dashboard.html](http://localhost:8080/dashboard.html
 | `/operations.html` | Head of operations / resource manager | Team pressure rankings, redeployment planner with skills matching and recommendations, automation candidates, workload by team |
 | `/tickets.html` | Operations team / ticket triage | Time-to-live tracking, at-risk ticket cards with TTL countdown bars, open ticket table with team pressure overlay, resolution performance |
 | `/index.html` | All users | Searchable directory of people, teams, skills, and tickets with individual profiles and team overviews |
+| `/team-leader.html` | Team leader | Team selector, health summary, director briefing panel, skills concentration risks, member table, open tickets |
 
 All pages share a consistent ONS Design System navigation bar with the active page highlighted. The floating chat assistant (💬 button, bottom-right) is available on every page.
 
@@ -79,10 +80,12 @@ aiv1hackathon/
 │   ├── dashboard.js          # Director's Dashboard — KPI cards, charts, recommendations
 │   ├── operations.js         # Operations View — pressure scoring, redeployment, automation
 │   ├── tickets.js            # Ticket View — TTL calculations, at-risk rendering
+│   ├── team-leader.js        # Team Leader View — health summary, evidence panel, skills risks
 │   └── app.js                # Dashboard bootstrap
 ├── dashboard.html            # Director's Dashboard
 ├── operations.html           # Operations Manager View
 ├── tickets.html              # Ticket Triage View
+├── team-leader.html          # Team Leader View
 ├── index.html                # Staff & Services Finder
 └── README.md
 ```

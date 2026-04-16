@@ -42,9 +42,12 @@ function renderDashboard() {
   if (recs.length) {
     h += '<h2 class="ons-u-fs-m ons-u-mb-s">Key Findings &amp; Recommendations</h2>';
     recs.forEach(r => {
-      h += '<div class="rec ' + (r.urgent ? 'rec--urgent' : '') + '">';
-      h += '<div class="rec__title">' + r.title + '</div>';
-      h += '<div class="rec__body">' + r.body + '</div></div>';
+      h += '<div class="ons-panel ons-panel--info ons-panel--no-title ons-u-mb-s ' + (r.urgent ? 'rec--urgent' : '') + '">';
+      h += '<span class="ons-panel__assistive-text ons-u-vh">Important information: </span>';
+      h += '<div class="ons-panel__body">';
+      h += '<p class="rec__title">' + (r.urgent ? '<span class="ons-status ons-status--error">Urgent</span> ' : '<span class="ons-status ons-status--pending">Action</span> ') + r.title + '</p>';
+      h += '<p class="rec__body">' + r.body + '</p>';
+      h += '</div></div>';
     });
     h += '<div class="ons-u-mb-l"></div>';
   }

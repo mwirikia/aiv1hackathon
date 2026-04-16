@@ -3,396 +3,314 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Staff & Services Finder</title>
+  <title>Staff and Services Finder</title>
+  <link rel="stylesheet" href="https://cdn.ons.gov.uk/sdc/design-system/73.3.0/css/main.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "GDS Transport", arial, helvetica, sans-serif;
-      color: #0b0c0c;
-      background: #f3f2f1;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: #1d70b8; text-decoration: underline; }
-    a:hover { color: #003078; }
-    a:focus { outline: 3px solid #fd0; outline-offset: 0; background: #fd0; color: #0b0c0c; }
-
-    .header {
-      background: #0b0c0c;
-      padding: 16px 0;
-    }
-    .header__inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .header h1 {
-      color: #fff;
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0;
-    }
-    .header p {
-      color: #b1b4b6;
-      font-size: 16px;
-      margin: 4px 0 0;
+    .finder-main {
+      min-height: 60vh;
     }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 30px 20px;
+    .finder-search-wrap {
+      max-width: 54rem;
     }
 
-    #app { min-height: 60vh; }
-
-    /* Search input */
-    .search-input {
-      width: 100%;
-      font-size: 24px;
-      padding: 12px 16px;
-      border: 2px solid #0b0c0c;
-      border-radius: 0;
-      font-family: inherit;
-      margin-bottom: 30px;
-    }
-    .search-input:focus { outline: 3px solid #fd0; outline-offset: 0; border-color: #0b0c0c; }
-
-    /* Team grid (empty state) */
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-    .team-card {
+    .finder-team-card {
+      border: 1px solid #bfbfbf;
       background: #fff;
-      border: 1px solid #b1b4b6;
-      padding: 20px;
+      padding: 1rem;
+      height: 100%;
+    }
+
+    .finder-team-card h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .finder-team-card p {
+      margin-bottom: 0.6rem;
+      color: #3d3d3d;
+    }
+
+    .finder-panel-link {
       text-decoration: none;
-      color: #0b0c0c;
+      color: inherit;
       display: block;
-      transition: box-shadow 0.15s;
     }
-    .team-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); color: #0b0c0c; }
-    .team-card h3 { font-size: 18px; margin-bottom: 8px; color: #1d70b8; }
-    .team-card .meta { font-size: 14px; color: #505a5f; }
-    .team-card .open-badge {
-      display: inline-block;
-      background: #f47738;
-      color: #fff;
-      font-size: 13px;
-      padding: 2px 8px;
-      border-radius: 3px;
-      margin-top: 8px;
-    }
-    .team-card .open-badge.zero { background: #00703c; }
 
-    /* Section headings */
-    .results-section { margin-bottom: 28px; }
-    .results-section h2 {
-      font-size: 18px;
-      border-bottom: 2px solid #1d70b8;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
+    .finder-panel-link:hover .finder-team-card,
+    .finder-panel-link:hover .finder-result-panel {
+      border-color: #206095;
+      box-shadow: 0 0 0 2px #206095 inset;
     }
-    .results-section h2 span { font-weight: 400; color: #505a5f; }
 
-    /* Person card (search results) */
-    .person-card {
+    .finder-result-panel {
+      border: 1px solid #bfbfbf;
       background: #fff;
-      border: 1px solid #b1b4b6;
-      padding: 16px 20px;
-      margin-bottom: 8px;
-      display: block;
-      text-decoration: none;
-      color: #0b0c0c;
-      transition: box-shadow 0.15s;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
     }
-    .person-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); color: #0b0c0c; }
-    .person-card .name { font-weight: 700; font-size: 16px; color: #1d70b8; }
-    .person-card .role-team { font-size: 14px; color: #505a5f; margin: 4px 0; }
-    .person-card .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
 
-    /* Skill tags */
-    .tag {
+    .finder-tag {
       display: inline-block;
-      background: #f3f2f1;
-      border: 1px solid #b1b4b6;
-      font-size: 13px;
-      padding: 1px 8px;
-      border-radius: 3px;
+      background: #e9eff5;
+      color: #033e72;
+      border: 1px solid #a8bdd1;
+      font-size: 0.8rem;
+      padding: 0.1rem 0.5rem;
+      margin: 0 0.3rem 0.3rem 0;
+      border-radius: 1rem;
+      white-space: nowrap;
     }
 
-    /* Allocation bar (inline) */
-    .alloc-bar-wrap {
+    .finder-badge {
+      margin-left: 0.35rem;
+    }
+
+    .finder-alloc {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 6px;
+      gap: 0.5rem;
+      margin-top: 0.55rem;
     }
-    .alloc-bar {
-      width: 120px;
-      height: 8px;
-      background: #dee0e2;
-      border-radius: 4px;
+
+    .finder-alloc__track {
+      width: 8.5rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: #dcdcdc;
       overflow: hidden;
     }
-    .alloc-bar-fill {
+
+    .finder-alloc__fill {
       height: 100%;
-      border-radius: 4px;
+      border-radius: 999px;
     }
-    .alloc-bar-fill.green { background: #00703c; }
-    .alloc-bar-fill.amber { background: #f47738; }
-    .alloc-bar-fill.red { background: #d4351c; }
-    .alloc-label { font-size: 13px; font-weight: 700; }
-    .alloc-label.red { color: #d4351c; }
-    .alloc-label.amber { color: #f47738; }
 
-    /* Priority badges */
-    .priority {
-      display: inline-block;
-      font-size: 12px;
+    .finder-alloc__fill--green {
+      background: #0f8243;
+    }
+
+    .finder-alloc__fill--amber {
+      background: #fe781f;
+    }
+
+    .finder-alloc__fill--red {
+      background: #d0021b;
+    }
+
+    .finder-alloc__label {
       font-weight: 700;
-      padding: 1px 8px;
-      border-radius: 3px;
-      text-transform: uppercase;
+      font-size: 0.85rem;
     }
-    .priority.high { background: #d4351c; color: #fff; }
-    .priority.medium { background: #f47738; color: #fff; }
-    .priority.low { background: #b1b4b6; color: #0b0c0c; }
 
-    /* Ticket card (search results) */
-    .ticket-card {
-      background: #fff;
-      border: 1px solid #b1b4b6;
-      padding: 14px 20px;
-      margin-bottom: 8px;
+    .finder-alloc__label--green {
+      color: #0f8243;
     }
-    .ticket-card .desc { font-size: 14px; margin: 6px 0; }
-    .ticket-card .ticket-meta { font-size: 13px; color: #505a5f; }
-    .ticket-card .ticket-meta a { font-size: 13px; }
 
-    /* Status dot */
-    .status-dot {
+    .finder-alloc__label--amber {
+      color: #c44a00;
+    }
+
+    .finder-alloc__label--red {
+      color: #d0021b;
+    }
+
+    .finder-inline-meta {
+      color: #707071;
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+    }
+
+    .finder-section-heading {
+      margin-bottom: 0.7rem;
+    }
+
+    .finder-status-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: #3d3d3d;
+    }
+
+    .finder-status-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
       display: inline-block;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      margin-right: 4px;
-      vertical-align: middle;
+      margin-right: 0.2rem;
     }
-    .status-dot.open { background: #f47738; }
-    .status-dot.resolved { background: #00703c; }
 
-    /* No results */
-    .no-results { color: #505a5f; font-size: 16px; padding: 20px 0; }
-
-    /* Back link */
-    .back-link { display: inline-block; margin-bottom: 20px; font-size: 16px; }
-
-    /* Person profile */
-    .profile-header { margin-bottom: 24px; }
-    .profile-header .name { font-size: 30px; font-weight: 700; margin-bottom: 4px; }
-    .profile-header .meta-line { font-size: 16px; color: #505a5f; margin: 4px 0; }
-
-    .grade-badge {
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 3px;
-      color: #fff;
-      vertical-align: middle;
-      margin-left: 8px;
+    .finder-status-dot--open {
+      background: #fe781f;
     }
-    .grade-badge.G6  { background: #4c2c92; }
-    .grade-badge.G7  { background: #1d70b8; }
-    .grade-badge.SEO { background: #10403c; }
-    .grade-badge.HEO { background: #00703c; }
-    .grade-badge.EO  { background: #f47738; }
-    .grade-badge.AO  { background: #b1b4b6; color: #0b0c0c; }
 
-    .profile-section { margin-bottom: 24px; }
-    .profile-section h3 { font-size: 16px; margin-bottom: 8px; border-bottom: 1px solid #b1b4b6; padding-bottom: 4px; }
+    .finder-status-dot--resolved {
+      background: #0f8243;
+    }
 
-    /* Stacked allocation bar */
-    .stacked-bar-wrap { margin: 12px 0; }
-    .stacked-bar {
+    .finder-stacked-wrap {
+      margin-top: 0.75rem;
+    }
+
+    .finder-stacked {
       display: flex;
-      height: 32px;
-      border-radius: 4px;
+      height: 2rem;
+      border-radius: 0.2rem;
       overflow: hidden;
-      background: #dee0e2;
+      background: #dcdcdc;
     }
-    .stacked-bar .segment {
+
+    .finder-stacked__segment {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
       color: #fff;
-      overflow: hidden;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0 0.3rem;
       white-space: nowrap;
-      padding: 0 6px;
+      overflow: hidden;
     }
-    .stacked-bar-legend {
+
+    .finder-legend {
+      margin-top: 0.6rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 8px;
-      font-size: 13px;
+      gap: 0.7rem;
+      font-size: 0.8rem;
     }
-    .stacked-bar-legend .swatch {
+
+    .finder-legend__swatch {
+      width: 0.75rem;
+      height: 0.75rem;
       display: inline-block;
-      width: 12px; height: 12px;
-      border-radius: 2px;
-      margin-right: 4px;
+      margin-right: 0.25rem;
+      border-radius: 0.1rem;
       vertical-align: middle;
     }
-    .alloc-total {
-      font-size: 16px;
-      font-weight: 700;
-      margin-top: 6px;
+
+    .finder-clickable-row {
+      cursor: pointer;
     }
 
-    /* Team members list on person profile */
-    .member-link {
-      display: inline-block;
-      margin-right: 12px;
-      margin-bottom: 4px;
+    .finder-clickable-row:hover {
+      background: #f2f6fb;
     }
 
-    /* Team overview */
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 24px;
+    .finder-row-alert {
+      background: #fff3f3;
     }
-    .stat-box {
-      background: #fff;
-      border: 1px solid #b1b4b6;
-      padding: 14px 20px;
-      flex: 1;
-      min-width: 140px;
-      text-align: center;
-    }
-    .stat-box .stat-value { font-size: 28px; font-weight: 700; }
-    .stat-box .stat-label { font-size: 13px; color: #505a5f; }
 
-    /* Members table */
-    .members-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 24px;
+    .finder-row-alert:hover {
+      background: #ffe9e9;
     }
-    .members-table th {
-      text-align: left;
-      font-size: 14px;
-      padding: 8px 12px;
-      border-bottom: 2px solid #0b0c0c;
-      background: #f3f2f1;
-    }
-    .members-table td {
-      font-size: 14px;
-      padding: 10px 12px;
-      border-bottom: 1px solid #b1b4b6;
-    }
-    .members-table tr.clickable { cursor: pointer; }
-    .members-table tr.clickable:hover { background: #f0f4f5; }
-    .members-table tr.over-alloc { background: #fce4e4; }
-    .members-table tr.over-alloc:hover { background: #f9d0d0; }
-
-    /* Ticket list in team view */
-    .ticket-list-item {
-      background: #fff;
-      border: 1px solid #b1b4b6;
-      padding: 12px 16px;
-      margin-bottom: 6px;
-    }
-    .ticket-list-item .desc { font-size: 14px; margin: 4px 0 0; }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header__inner">
-      <h1>Directorate of Corporate Services</h1>
-      <p>Staff & Services Finder &nbsp;|&nbsp; <a href="dashboard.html" style="color:#b1b4b6;font-size:14px">Director's Dashboard →</a></p>
+  <div class="ons-page">
+    <div class="ons-page__content">
+      <header class="ons-header ons-header--internal" role="banner">
+        <div class="ons-header__top">
+          <div class="ons-container ons-container--wide">
+            <div class="ons-header__grid-top ons-grid ons-grid-flex ons-grid-flex--between ons-grid-flex--vertical-center ons-grid-flex--no-wrap ons-grid--gutterless">
+              <div class="ons-grid__col ons-col-auto">
+                <div class="ons-header__title">Staff and Services Finder</div>
+              </div>
+              <div class="ons-grid__col ons-col-auto">
+                <a href="dashboard.html" style="color:#fff;font-size:0.95rem;text-decoration:underline;">Director dashboard</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ons-header__main">
+          <div class="ons-container ons-container--wide">
+            <div class="ons-header__title">Directorate of Corporate Services</div>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-content" class="finder-main">
+        <div class="ons-container ons-container--wide ons-u-pt-l ons-u-pb-xl">
+          <div id="app"></div>
+        </div>
+      </main>
+
+      <footer class="ons-footer">
+        <div class="ons-footer__body ons-page__footer">
+          <div class="ons-container ons-container--wide">
+            <div class="ons-footer__license ons-u-mb-l">
+              Prototype: AI Hackathon V1 April 2026
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-  </header>
-  <main class="container">
-    <div id="app"></div>
-  </main>
+  </div>
+
   <script>
-  // ── Data stores ──
   let DATA = { people: [], tickets: [], orgChart: null };
   let peopleById = new Map();
   let teamsByName = new Map();
   let searchIndex = [];
 
-  // ── Data loading ──
   async function loadData() {
     const [people, tickets, orgChart] = await Promise.all([
       fetch('data/workforce.json').then(r => r.json()),
       fetch('data/tickets.json').then(r => r.json()),
       fetch('data/org-chart.json').then(r => r.json()),
     ]);
+
     DATA = { people, tickets, orgChart };
 
-    // peopleById
-    for (const p of people) {
-      peopleById.set(p.employee_id, p);
+    for (const person of people) {
+      peopleById.set(person.employee_id, person);
     }
 
-    // teamsByName — enrich org-chart teams with member objects and tickets
-    for (const t of orgChart.teams) {
-      const members = t.members.map(id => peopleById.get(id)).filter(Boolean);
-      const teamTickets = tickets.filter(tk => tk.assigned_team === t.team);
-      const openTickets = teamTickets.filter(tk => tk.status === 'open');
-      teamsByName.set(t.team, {
-        ...t,
+    for (const team of orgChart.teams) {
+      const members = team.members.map(id => peopleById.get(id)).filter(Boolean);
+      const teamTickets = tickets.filter(ticket => ticket.assigned_team === team.team);
+      const openTickets = teamTickets.filter(ticket => ticket.status === 'open');
+      teamsByName.set(team.team, {
+        ...team,
         memberObjects: members,
         tickets: teamTickets,
-        openTickets: openTickets,
+        openTickets,
         openTicketCount: openTickets.length,
       });
     }
 
-    // Search index
-    for (const p of people) {
+    for (const person of people) {
       searchIndex.push({
         type: 'person',
-        id: p.employee_id,
-        text: [p.name, p.role, p.team, ...p.skills, ...p.allocations.map(a => a.project)].join(' ').toLowerCase(),
-        data: p,
+        id: person.employee_id,
+        text: [person.name, person.role, person.team, ...person.skills, ...person.allocations.map(a => a.project)].join(' ').toLowerCase(),
+        data: person,
       });
     }
-    for (const tk of tickets) {
+
+    for (const ticket of tickets) {
       searchIndex.push({
         type: 'ticket',
-        id: tk.ticket_id,
-        text: [tk.description, tk.category, tk.assigned_team].join(' ').toLowerCase(),
-        data: tk,
+        id: ticket.ticket_id,
+        text: [ticket.description, ticket.category, ticket.assigned_team].join(' ').toLowerCase(),
+        data: ticket,
       });
     }
   }
 
-  // ── Router ──
   const app = document.getElementById('app');
 
   function navigate() {
     const hash = location.hash || '#/';
     if (hash.startsWith('#/person/')) {
-      const id = hash.replace('#/person/', '');
-      renderPerson(id);
+      renderPerson(hash.replace('#/person/', ''));
     } else if (hash.startsWith('#/team/')) {
-      const name = decodeURIComponent(hash.replace('#/team/', ''));
-      renderTeam(name);
+      renderTeam(decodeURIComponent(hash.replace('#/team/', '')));
     } else {
       renderSearch();
     }
   }
 
-  // ── Helpers ──
   function allocColor(pct) {
     if (pct > 100) return 'red';
     if (pct > 80) return 'amber';
@@ -400,27 +318,37 @@
   }
 
   function allocBarHTML(pct) {
-    const col = allocColor(pct);
-    const w = Math.min(pct, 120);
-    return `<span class="alloc-bar-wrap">
-      <span class="alloc-bar"><span class="alloc-bar-fill ${col}" style="width:${w * 100 / 120}%"></span></span>
-      <span class="alloc-label ${col}">${pct}%</span>
-    </span>`;
+    const color = allocColor(pct);
+    const width = Math.min(pct, 120);
+    return '<span class="finder-alloc">'
+      + '<span class="finder-alloc__track"><span class="finder-alloc__fill finder-alloc__fill--' + color + '" style="width:' + (width * 100 / 120) + '%"></span></span>'
+      + '<span class="finder-alloc__label finder-alloc__label--' + color + '">' + pct + '%</span>'
+      + '</span>';
   }
 
-  function priorityBadge(p) {
-    return `<span class="priority ${p}">${p}</span>`;
+  function priorityStatus(priority) {
+    const map = {
+      high: 'error',
+      medium: 'pending',
+      low: 'success',
+    };
+    return map[priority] || 'pending';
   }
 
-  function statusDot(s) {
-    return `<span class="status-dot ${s}"></span>`;
+  function priorityLabel(priority) {
+    const s = priority.charAt(0).toUpperCase() + priority.slice(1);
+    return '<span class="ons-status ons-status--' + priorityStatus(priority) + '">' + s + '</span>';
+  }
+
+  function statusDot(status) {
+    const mod = status === 'resolved' ? 'resolved' : 'open';
+    return '<span class="finder-status-inline"><span class="finder-status-dot finder-status-dot--' + mod + '"></span>' + status + '</span>';
   }
 
   function formatCategory(cat) {
     return cat.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   }
 
-  // ── Debounce ──
   let debounceTimer;
   function debounce(fn, ms) {
     return (...args) => {
@@ -429,27 +357,39 @@
     };
   }
 
-  // ── Search View ──
   let lastSearchQuery = '';
 
   function renderSearch(restoredQuery) {
     const query = restoredQuery || lastSearchQuery || '';
     lastSearchQuery = query;
 
-    let html = `<input class="search-input" type="text" placeholder="Search people, skills, teams, or topics\u2026" value="${query.replace(/"/g, '&quot;')}">`;
+    let html = '';
+    html += '<section aria-labelledby="finder-title">';
+    html += '<h1 id="finder-title" class="ons-u-fs-xl ons-u-mb-s">Find people, teams and service work</h1>';
+    html += '<p class="ons-u-mb-m">Search by person, team, role, skill, ticket category, or project.</p>';
+    html += '<div class="finder-search-wrap">';
+    html += '<label class="ons-label" for="finder-search">Search the directorate</label>';
+    html += '<input id="finder-search" class="ons-input ons-input--text" type="search" placeholder="Search people, skills, teams, or topics" value="' + query.replace(/"/g, '&quot;') + '">';
+    html += '</div>';
+    html += '</section>';
 
     if (!query.trim()) {
-      // Empty state: show all teams
-      html += '<div class="team-grid">';
-      for (const [name, t] of teamsByName) {
-        const badgeClass = t.openTicketCount === 0 ? 'open-badge zero' : 'open-badge';
-        html += `<a class="team-card" href="#/team/${encodeURIComponent(name)}">
-          <h3>${name}</h3>
-          <div class="meta">${t.headcount} people</div>
-          <span class="${badgeClass}">${t.openTicketCount} open ticket${t.openTicketCount !== 1 ? 's' : ''}</span>
-        </a>`;
+      html += '<section class="ons-u-mt-l" aria-labelledby="team-browse">';
+      html += '<h2 id="team-browse" class="finder-section-heading">Browse teams</h2>';
+      html += '<div class="ons-grid ons-grid--flex">';
+      for (const [name, team] of teamsByName) {
+        html += '<div class="ons-grid__col ons-col-4@m ons-u-mb-s">';
+        html += '<a class="finder-panel-link" href="#/team/' + encodeURIComponent(name) + '">';
+        html += '<article class="finder-team-card">';
+        html += '<h3 class="ons-u-fs-m ons-u-mb-xs">' + name + '</h3>';
+        html += '<p>' + team.headcount + ' people</p>';
+        html += '<p><span class="ons-status ons-status--' + (team.openTicketCount > 0 ? 'pending' : 'success') + '">' + team.openTicketCount + ' open tickets</span></p>';
+        html += '</article>';
+        html += '</a>';
+        html += '</div>';
       }
       html += '</div>';
+      html += '</section>';
     } else {
       const q = query.toLowerCase().trim();
       const matchedPeople = [];
@@ -462,236 +402,269 @@
         if (entry.type === 'ticket') matchedTickets.push(entry.data);
       }
 
-      // Direct team name matches
       for (const [name] of teamsByName) {
         if (name.toLowerCase().includes(q)) matchedTeamNames.add(name);
       }
-      // Cross-ref: teams from matched tickets
-      for (const tk of matchedTickets) {
-        matchedTeamNames.add(tk.assigned_team);
+      for (const ticket of matchedTickets) {
+        matchedTeamNames.add(ticket.assigned_team);
       }
 
-      const hasResults = matchedPeople.length || matchedTeamNames.size || matchedTickets.length;
-
-      if (!hasResults) {
-        html += '<p class="no-results">No results found. Try a different search term.</p>';
+      if (!matchedPeople.length && !matchedTickets.length && !matchedTeamNames.size) {
+        html += '<div class="ons-panel ons-panel--info ons-panel--no-title ons-u-mt-l">';
+        html += '<span class="ons-panel__assistive-text ons-u-vh">Important information:</span>';
+        html += '<div class="ons-panel__body"><p>No results found. Try a different search term.</p></div>';
+        html += '</div>';
       }
 
-      // People section
       if (matchedPeople.length) {
-        html += `<div class="results-section"><h2>People <span>(${matchedPeople.length})</span></h2>`;
-        for (const p of matchedPeople) {
-          html += `<a class="person-card" href="#/person/${p.employee_id}">
-            <div class="name">${p.name}</div>
-            <div class="role-team">${p.role} &middot; ${p.team} &middot; ${p.location}</div>
-            <div class="tags">${p.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
-            ${allocBarHTML(p.total_allocation)}
-          </a>`;
+        html += '<section class="ons-u-mt-l" aria-labelledby="people-results">';
+        html += '<h2 id="people-results" class="finder-section-heading">People (' + matchedPeople.length + ')</h2>';
+        for (const person of matchedPeople) {
+          html += '<a class="finder-panel-link" href="#/person/' + person.employee_id + '">';
+          html += '<article class="finder-result-panel">';
+          html += '<h3 class="ons-u-fs-m ons-u-mb-no">' + person.name + '</h3>';
+          html += '<p class="finder-inline-meta">' + person.role + ' · ' + person.team + ' · ' + person.location + '</p>';
+          html += '<p class="ons-u-mt-s">' + person.skills.map(skill => '<span class="finder-tag">' + skill + '</span>').join('') + '</p>';
+          html += allocBarHTML(person.total_allocation);
+          html += '</article>';
+          html += '</a>';
         }
-        html += '</div>';
+        html += '</section>';
       }
 
-      // Teams section
       if (matchedTeamNames.size) {
-        html += `<div class="results-section"><h2>Teams <span>(${matchedTeamNames.size})</span></h2>`;
-        html += '<div class="team-grid">';
-        for (const name of matchedTeamNames) {
-          const t = teamsByName.get(name);
-          if (!t) continue;
-          const badgeClass = t.openTicketCount === 0 ? 'open-badge zero' : 'open-badge';
-          html += `<a class="team-card" href="#/team/${encodeURIComponent(name)}">
-            <h3>${name}</h3>
-            <div class="meta">${t.headcount} people</div>
-            <span class="${badgeClass}">${t.openTicketCount} open ticket${t.openTicketCount !== 1 ? 's' : ''}</span>
-          </a>`;
-        }
-        html += '</div></div>';
-      }
-
-      // Tickets section
-      if (matchedTickets.length) {
-        html += `<div class="results-section"><h2>Related Tickets <span>(${matchedTickets.length})</span></h2>`;
-        for (const tk of matchedTickets) {
-          html += `<div class="ticket-card">
-            ${statusDot(tk.status)} ${priorityBadge(tk.priority)}
-            <span style="font-size:13px;color:#505a5f;margin-left:6px">${formatCategory(tk.category)}</span>
-            <div class="desc">${tk.description}</div>
-            <div class="ticket-meta">${tk.ticket_id} &middot; <a href="#/team/${encodeURIComponent(tk.assigned_team)}">${tk.assigned_team}</a></div>
-          </div>`;
+        html += '<section class="ons-u-mt-l" aria-labelledby="team-results">';
+        html += '<h2 id="team-results" class="finder-section-heading">Teams (' + matchedTeamNames.size + ')</h2>';
+        html += '<div class="ons-grid ons-grid--flex">';
+        for (const teamName of matchedTeamNames) {
+          const team = teamsByName.get(teamName);
+          if (!team) continue;
+          html += '<div class="ons-grid__col ons-col-4@m ons-u-mb-s">';
+          html += '<a class="finder-panel-link" href="#/team/' + encodeURIComponent(teamName) + '">';
+          html += '<article class="finder-team-card">';
+          html += '<h3 class="ons-u-fs-m ons-u-mb-xs">' + teamName + '</h3>';
+          html += '<p>' + team.headcount + ' people</p>';
+          html += '<p><span class="ons-status ons-status--' + (team.openTicketCount > 0 ? 'pending' : 'success') + '">' + team.openTicketCount + ' open tickets</span></p>';
+          html += '</article>';
+          html += '</a>';
+          html += '</div>';
         }
         html += '</div>';
+        html += '</section>';
+      }
+
+      if (matchedTickets.length) {
+        html += '<section class="ons-u-mt-l" aria-labelledby="ticket-results">';
+        html += '<h2 id="ticket-results" class="finder-section-heading">Related tickets (' + matchedTickets.length + ')</h2>';
+        for (const ticket of matchedTickets) {
+          html += '<article class="finder-result-panel">';
+          html += '<p class="ons-u-mb-xs">' + priorityLabel(ticket.priority) + '<span class="finder-badge">' + statusDot(ticket.status) + '</span></p>';
+          html += '<p class="finder-inline-meta">' + formatCategory(ticket.category) + '</p>';
+          html += '<p class="ons-u-mt-xs ons-u-mb-xs">' + ticket.description + '</p>';
+          html += '<p class="finder-inline-meta">' + ticket.ticket_id + ' · <a href="#/team/' + encodeURIComponent(ticket.assigned_team) + '">' + ticket.assigned_team + '</a></p>';
+          html += '</article>';
+        }
+        html += '</section>';
       }
     }
 
     app.innerHTML = html;
 
-    // Wire up input
-    const input = app.querySelector('.search-input');
+    const input = document.getElementById('finder-search');
     if (input) {
       input.focus();
       input.addEventListener('input', debounce(e => {
-        lastSearchQuery = e.target.value;
-        renderSearch(e.target.value);
-        // Keep cursor position
-        const pos = e.target.selectionStart;
-        const newInput = app.querySelector('.search-input');
-        if (newInput) { newInput.focus(); newInput.setSelectionRange(pos, pos); }
+        const value = e.target.value;
+        lastSearchQuery = value;
+        const cursor = e.target.selectionStart;
+        renderSearch(value);
+        const newInput = document.getElementById('finder-search');
+        if (newInput) {
+          newInput.focus();
+          newInput.setSelectionRange(cursor, cursor);
+        }
       }, 200));
     }
   }
 
-  // ── Segment colours for allocation bar chart ──
-  const segmentPalette = ['#1d70b8', '#4c2c92', '#00703c', '#f47738', '#d4351c', '#5694ca', '#912b88'];
+  const segmentPalette = ['#206095', '#003c57', '#0f8243', '#fe781f', '#d0021b', '#4263a5', '#8f2d56'];
 
   function tenure(startDate) {
     const start = new Date(startDate);
     const now = new Date();
     let years = now.getFullYear() - start.getFullYear();
     let months = now.getMonth() - start.getMonth();
-    if (months < 0) { years--; months += 12; }
-    const parts = [];
-    if (years > 0) parts.push(`${years} year${years !== 1 ? 's' : ''}`);
-    if (months > 0) parts.push(`${months} month${months !== 1 ? 's' : ''}`);
-    return parts.join(', ') || 'Less than a month';
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+    const out = [];
+    if (years > 0) out.push(years + ' year' + (years !== 1 ? 's' : ''));
+    if (months > 0) out.push(months + ' month' + (months !== 1 ? 's' : ''));
+    return out.join(', ') || 'Less than a month';
   }
 
-  // ── Person Profile ──
   function renderPerson(id) {
-    const p = peopleById.get(id);
-    if (!p) { app.innerHTML = '<p>Person not found.</p>'; return; }
+    const person = peopleById.get(id);
+    if (!person) {
+      app.innerHTML = '<p>Person not found.</p>';
+      return;
+    }
 
-    const col = allocColor(p.total_allocation);
+    const color = allocColor(person.total_allocation);
 
-    // Check if this person leads a team
     let leadsTeam = null;
-    for (const [tName, t] of teamsByName) {
-      if (t.team_lead === p.employee_id) { leadsTeam = t; break; }
-    }
-
-    let html = `<a class="back-link" href="#/">&larr; Back to search</a>`;
-
-    // Header
-    html += `<div class="profile-header">
-      <div class="name">${p.name} <span class="grade-badge ${p.grade}">${p.grade}</span></div>
-      <div class="meta-line">${p.role}</div>
-      <div class="meta-line"><a href="#/team/${encodeURIComponent(p.team)}">${p.team}</a> &middot; ${p.location}</div>
-      <div class="meta-line">Joined ${new Date(p.start_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })} &middot; ${tenure(p.start_date)}</div>
-    </div>`;
-
-    // Skills
-    html += `<div class="profile-section"><h3>Skills</h3>
-      <div class="tags">${p.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
-    </div>`;
-
-    // Allocation stacked bar
-    html += `<div class="profile-section"><h3>Project Allocations</h3>`;
-    html += `<div class="stacked-bar-wrap">`;
-    html += `<div class="stacked-bar">`;
-    for (let i = 0; i < p.allocations.length; i++) {
-      const a = p.allocations[i];
-      const w = a.percentage; // percentage of 100
-      const bg = segmentPalette[i % segmentPalette.length];
-      html += `<div class="segment" style="width:${w}%;background:${bg}" title="${a.project}: ${a.percentage}%">${a.percentage > 15 ? a.project + ' ' + a.percentage + '%' : a.percentage + '%'}</div>`;
-    }
-    html += `</div>`; // .stacked-bar
-    html += `<div class="stacked-bar-legend">`;
-    for (let i = 0; i < p.allocations.length; i++) {
-      const a = p.allocations[i];
-      const bg = segmentPalette[i % segmentPalette.length];
-      html += `<span><span class="swatch" style="background:${bg}"></span>${a.project} (${a.percentage}%)</span>`;
-    }
-    html += `</div>`; // .stacked-bar-legend
-    html += `<div class="alloc-total ${col}">Total: ${p.total_allocation}%</div>`;
-    html += `</div></div>`; // .stacked-bar-wrap, .profile-section
-
-    // Team lead section
-    if (leadsTeam) {
-      html += `<div class="profile-section"><h3>Leads: <a href="#/team/${encodeURIComponent(leadsTeam.team)}">${leadsTeam.team}</a></h3>`;
-      const others = leadsTeam.memberObjects.filter(m => m.employee_id !== p.employee_id);
-      html += `<div>${others.map(m => `<a class="member-link" href="#/person/${m.employee_id}">${m.name} (${m.role})</a>`).join('')}</div>`;
-      html += `</div>`;
-    }
-
-    app.innerHTML = html;
-  }
-
-  // ── Team Overview ──
-  function renderTeam(name) {
-    const t = teamsByName.get(name);
-    if (!t) { app.innerHTML = '<p>Team not found.</p>'; return; }
-
-    const lead = peopleById.get(t.team_lead);
-    const avgAlloc = Math.round(t.memberObjects.reduce((sum, m) => sum + m.total_allocation, 0) / t.memberObjects.length);
-    const overAlloc = t.memberObjects.filter(m => m.total_allocation > 100).length;
-    const totalTickets = t.tickets.length;
-    const resolvedTickets = t.tickets.filter(tk => tk.status === 'resolved').length;
-
-    let html = `<a class="back-link" href="#/">&larr; Back to search</a>`;
-
-    // Header
-    html += `<div class="profile-header">
-      <div class="name">${t.team}</div>
-      <div class="meta-line">Led by: ${lead ? `<a href="#/person/${lead.employee_id}">${lead.name}</a>` : 'Unknown'}</div>
-    </div>`;
-
-    // Stats
-    html += `<div class="stats-row">
-      <div class="stat-box"><div class="stat-value">${t.headcount}</div><div class="stat-label">People</div></div>
-      <div class="stat-box"><div class="stat-value ${allocColor(avgAlloc)}" style="color:${avgAlloc > 100 ? '#d4351c' : avgAlloc > 80 ? '#f47738' : '#00703c'}">${avgAlloc}%</div><div class="stat-label">Avg Allocation</div></div>
-      <div class="stat-box"><div class="stat-value" style="color:${overAlloc > 0 ? '#d4351c' : '#00703c'}">${overAlloc}</div><div class="stat-label">Over-allocated</div></div>
-      <div class="stat-box"><div class="stat-value" style="color:${t.openTicketCount > 0 ? '#f47738' : '#00703c'}">${t.openTicketCount}/${totalTickets}</div><div class="stat-label">Open / Total Tickets</div></div>
-    </div>`;
-
-    // Members table
-    html += `<div class="profile-section"><h3>Team Members</h3>
-    <table class="members-table">
-      <thead><tr><th>Name</th><th>Role</th><th>Grade</th><th>Allocation</th><th>Location</th></tr></thead>
-      <tbody>`;
-    for (const m of t.memberObjects) {
-      const over = m.total_allocation > 100;
-      html += `<tr class="clickable ${over ? 'over-alloc' : ''}" onclick="location.hash='#/person/${m.employee_id}'">
-        <td style="color:#1d70b8;font-weight:700">${m.name}</td>
-        <td>${m.role}</td>
-        <td><span class="grade-badge ${m.grade}">${m.grade}</span></td>
-        <td>${allocBarHTML(m.total_allocation)}</td>
-        <td>${m.location}</td>
-      </tr>`;
-    }
-    html += `</tbody></table></div>`;
-
-    // Open tickets
-    const priorityOrder = { high: 0, medium: 1, low: 2 };
-    const openSorted = [...t.openTickets].sort((a, b) => (priorityOrder[a.priority] || 9) - (priorityOrder[b.priority] || 9));
-
-    html += `<div class="profile-section"><h3>Open Tickets (${t.openTicketCount})</h3>`;
-    if (openSorted.length === 0) {
-      html += '<p style="color:#505a5f">No open tickets.</p>';
-    } else {
-      for (const tk of openSorted) {
-        html += `<div class="ticket-list-item">
-          ${statusDot('open')} ${priorityBadge(tk.priority)}
-          <span style="font-size:13px;color:#505a5f;margin-left:6px">${formatCategory(tk.category)}</span>
-          <div class="desc">${tk.description}</div>
-          <div style="font-size:12px;color:#505a5f;margin-top:2px">${tk.ticket_id} &middot; Opened ${tk.created_date}</div>
-        </div>`;
+    for (const team of teamsByName.values()) {
+      if (team.team_lead === person.employee_id) {
+        leadsTeam = team;
+        break;
       }
     }
-    html += `</div>`;
 
-    // Resolved count
-    html += `<div class="profile-section"><h3>Resolved Tickets</h3>
-      <p style="font-size:14px;color:#505a5f">${resolvedTickets} ticket${resolvedTickets !== 1 ? 's' : ''} resolved</p>
-    </div>`;
+    let html = '';
+    html += '<a href="#/" class="ons-u-fs-s">Back to search</a>';
+    html += '<section class="ons-u-mt-m" aria-labelledby="person-name">';
+    html += '<h1 id="person-name" class="ons-u-fs-xl ons-u-mb-xs">' + person.name + '</h1>';
+    html += '<p class="ons-u-mb-xs">' + person.role + ' <span class="ons-status ons-status--pending">' + person.grade + '</span></p>';
+    html += '<p class="finder-inline-meta"><a href="#/team/' + encodeURIComponent(person.team) + '">' + person.team + '</a> · ' + person.location + '</p>';
+    html += '<p class="finder-inline-meta">Joined ' + new Date(person.start_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) + ' · ' + tenure(person.start_date) + '</p>';
+    html += '</section>';
+
+    html += '<section class="ons-u-mt-l" aria-labelledby="skills-title">';
+    html += '<h2 id="skills-title" class="ons-u-fs-m">Skills</h2>';
+    html += '<p>' + person.skills.map(skill => '<span class="finder-tag">' + skill + '</span>').join('') + '</p>';
+    html += '</section>';
+
+    html += '<section class="ons-u-mt-l" aria-labelledby="allocations-title">';
+    html += '<h2 id="allocations-title" class="ons-u-fs-m">Project allocations</h2>';
+    html += '<div class="finder-stacked-wrap">';
+    html += '<div class="finder-stacked">';
+    for (let i = 0; i < person.allocations.length; i++) {
+      const allocation = person.allocations[i];
+      const bg = segmentPalette[i % segmentPalette.length];
+      const title = allocation.project + ': ' + allocation.percentage + '%';
+      const label = allocation.percentage > 15 ? allocation.project + ' ' + allocation.percentage + '%' : allocation.percentage + '%';
+      html += '<div class="finder-stacked__segment" style="width:' + allocation.percentage + '%;background:' + bg + '" title="' + title + '">' + label + '</div>';
+    }
+    html += '</div>';
+    html += '<div class="finder-legend">';
+    for (let i = 0; i < person.allocations.length; i++) {
+      const allocation = person.allocations[i];
+      const bg = segmentPalette[i % segmentPalette.length];
+      html += '<span><span class="finder-legend__swatch" style="background:' + bg + '"></span>' + allocation.project + ' (' + allocation.percentage + '%)</span>';
+    }
+    html += '</div>';
+    html += '<p class="ons-u-mt-s"><strong>Total allocation:</strong> <span class="finder-alloc__label finder-alloc__label--' + color + '">' + person.total_allocation + '%</span></p>';
+    html += '</div>';
+    html += '</section>';
+
+    if (leadsTeam) {
+      const others = leadsTeam.memberObjects.filter(m => m.employee_id !== person.employee_id);
+      html += '<section class="ons-u-mt-l" aria-labelledby="team-lead-title">';
+      html += '<h2 id="team-lead-title" class="ons-u-fs-m">Leads: <a href="#/team/' + encodeURIComponent(leadsTeam.team) + '">' + leadsTeam.team + '</a></h2>';
+      html += '<p>' + others.map(m => '<a href="#/person/' + m.employee_id + '">' + m.name + '</a> (' + m.role + ')').join(' · ') + '</p>';
+      html += '</section>';
+    }
 
     app.innerHTML = html;
   }
 
-  // ── Boot ──
+  function renderTeam(name) {
+    const team = teamsByName.get(name);
+    if (!team) {
+      app.innerHTML = '<p>Team not found.</p>';
+      return;
+    }
+
+    const lead = peopleById.get(team.team_lead);
+    const avgAlloc = Math.round(team.memberObjects.reduce((sum, member) => sum + member.total_allocation, 0) / team.memberObjects.length);
+    const overAlloc = team.memberObjects.filter(member => member.total_allocation > 100).length;
+    const totalTickets = team.tickets.length;
+    const resolvedTickets = team.tickets.filter(ticket => ticket.status === 'resolved').length;
+
+    let html = '';
+    html += '<a href="#/" class="ons-u-fs-s">Back to search</a>';
+    html += '<section class="ons-u-mt-m" aria-labelledby="team-name">';
+    html += '<h1 id="team-name" class="ons-u-fs-xl ons-u-mb-xs">' + team.team + '</h1>';
+    html += '<p class="finder-inline-meta">Led by: ' + (lead ? '<a href="#/person/' + lead.employee_id + '">' + lead.name + '</a>' : 'Unknown') + '</p>';
+    html += '</section>';
+
+    html += '<section class="ons-u-mt-l" aria-labelledby="team-kpis">';
+    html += '<h2 id="team-kpis" class="ons-u-fs-m">Team snapshot</h2>';
+    html += '<div class="ons-grid ons-grid--flex">';
+    html += '<div class="ons-grid__col ons-col-3@m ons-u-mb-s"><div class="finder-team-card"><p class="ons-u-fs-xl ons-u-mb-no"><strong>' + team.headcount + '</strong></p><p>People</p></div></div>';
+    html += '<div class="ons-grid__col ons-col-3@m ons-u-mb-s"><div class="finder-team-card"><p class="ons-u-fs-xl ons-u-mb-no"><strong>' + avgAlloc + '%</strong></p><p>Average allocation</p></div></div>';
+    html += '<div class="ons-grid__col ons-col-3@m ons-u-mb-s"><div class="finder-team-card"><p class="ons-u-fs-xl ons-u-mb-no"><strong>' + overAlloc + '</strong></p><p>Over-allocated</p></div></div>';
+    html += '<div class="ons-grid__col ons-col-3@m ons-u-mb-s"><div class="finder-team-card"><p class="ons-u-fs-xl ons-u-mb-no"><strong>' + team.openTicketCount + '/' + totalTickets + '</strong></p><p>Open/total tickets</p></div></div>';
+    html += '</div>';
+    html += '</section>';
+
+    html += '<section class="ons-u-mt-l" aria-labelledby="members-title">';
+    html += '<h2 id="members-title" class="ons-u-fs-m">Team members</h2>';
+    html += '<div class="ons-table-scrollable__content">';
+    html += '<table class="ons-table">';
+    html += '<thead class="ons-table__head"><tr class="ons-table__row"><th class="ons-table__header" scope="col">Name</th><th class="ons-table__header" scope="col">Role</th><th class="ons-table__header" scope="col">Grade</th><th class="ons-table__header" scope="col">Allocation</th><th class="ons-table__header" scope="col">Location</th></tr></thead>';
+    html += '<tbody class="ons-table__body">';
+    for (const member of team.memberObjects) {
+      const over = member.total_allocation > 100;
+      html += '<tr class="ons-table__row finder-clickable-row' + (over ? ' finder-row-alert' : '') + '" onclick="location.hash=\'#/person/' + member.employee_id + '\'">';
+      html += '<td class="ons-table__cell"><a href="#/person/' + member.employee_id + '"><strong>' + member.name + '</strong></a></td>';
+      html += '<td class="ons-table__cell">' + member.role + '</td>';
+      html += '<td class="ons-table__cell"><span class="ons-status ons-status--pending">' + member.grade + '</span></td>';
+      html += '<td class="ons-table__cell">' + allocBarHTML(member.total_allocation) + '</td>';
+      html += '<td class="ons-table__cell">' + member.location + '</td>';
+      html += '</tr>';
+    }
+    html += '</tbody></table></div></section>';
+
+    const priorityOrder = { high: 0, medium: 1, low: 2 };
+    const openSorted = [...team.openTickets].sort((a, b) => (priorityOrder[a.priority] || 9) - (priorityOrder[b.priority] || 9));
+
+    html += '<section class="ons-u-mt-l" aria-labelledby="open-tickets">';
+    html += '<h2 id="open-tickets" class="ons-u-fs-m">Open tickets (' + team.openTicketCount + ')</h2>';
+    if (!openSorted.length) {
+      html += '<p>No open tickets.</p>';
+    } else {
+      for (const ticket of openSorted) {
+        html += '<article class="finder-result-panel">';
+        html += '<p class="ons-u-mb-xs">' + priorityLabel(ticket.priority) + '<span class="finder-badge">' + statusDot('open') + '</span></p>';
+        html += '<p class="finder-inline-meta">' + formatCategory(ticket.category) + '</p>';
+        html += '<p class="ons-u-mt-xs ons-u-mb-xs">' + ticket.description + '</p>';
+        html += '<p class="finder-inline-meta">' + ticket.ticket_id + ' · Opened ' + ticket.created_date + '</p>';
+        html += '</article>';
+      }
+    }
+    html += '</section>';
+
+    html += '<section class="ons-u-mt-l" aria-labelledby="resolved-tickets">';
+    html += '<h2 id="resolved-tickets" class="ons-u-fs-m">Resolved tickets</h2>';
+    html += '<p>' + resolvedTickets + ' ticket' + (resolvedTickets !== 1 ? 's' : '') + ' resolved</p>';
+    html += '</section>';
+
+    app.innerHTML = html;
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
     await loadData();
     window.addEventListener('hashchange', navigate);
     navigate();
   });
+  </script>
+  <script>
+    (function() {
+      var scripts = ['https://cdn.ons.gov.uk/sdc/design-system/73.3.0/scripts/main.js'];
+      var scriptTag = document.createElement('script');
+      if (!('noModule' in scriptTag)) {
+        for (var i = 0; i < scripts.length; i++) {
+          scripts[i] = scripts[i].replace('.js', '.es5.js');
+        }
+      }
+      for (var j = 0; j < scripts.length; j++) {
+        var el = document.createElement('script');
+        el.src = scripts[j];
+        document.body.appendChild(el);
+      }
+    })();
   </script>
 </body>
 </html>

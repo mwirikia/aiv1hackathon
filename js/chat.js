@@ -47,12 +47,14 @@ function addBotMessage(text, suggestions, table) {
 
   if (table && table.length > 0) {
     var keys = Object.keys(table[0]);
-    html += '<div class="chat-table-wrap"><table class="chat-table"><thead><tr>';
-    keys.forEach(function(k) { html += '<th>' + k + '</th>'; });
-    html += '</tr></thead><tbody>';
+    html += '<div class="chat-table-wrap">';
+    html += '<table class="ons-table">';
+    html += '<thead class="ons-table__head"><tr class="ons-table__row">';
+    keys.forEach(function(k) { html += '<th class="ons-table__header" scope="col">' + k + '</th>'; });
+    html += '</tr></thead><tbody class="ons-table__body">';
     table.slice(0, 10).forEach(function(row) {
-      html += '<tr>';
-      keys.forEach(function(k) { html += '<td>' + row[k] + '</td>'; });
+      html += '<tr class="ons-table__row">';
+      keys.forEach(function(k) { html += '<td class="ons-table__cell">' + row[k] + '</td>'; });
       html += '</tr>';
     });
     html += '</tbody></table>';

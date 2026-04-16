@@ -75,14 +75,14 @@ aiv1hackathon/
 
 ## Design system
 
-The dashboard uses the [ONS Design System](https://service-manual.ons.gov.uk/design-system) (v73.3.0) loaded via CDN. Components used include:
+Both the dashboard and the staff finder use the [ONS Design System](https://service-manual.ons.gov.uk/design-system) (v73.3.0) loaded via CDN. Components/patterns used include:
 
 - Layout: `ons-container`, `ons-grid`, `ons-grid__col`
 - Header/Footer: `ons-header--internal`, `ons-footer`
 - Panels: `ons-panel--info`
 - Tables: `ons-table`, `ons-table__head`, `ons-table__body`, `ons-table__row`
 - Buttons: `ons-btn`
-- Inputs: `ons-input`
+- Inputs: `ons-input`, `ons-label`
 - Status badges: `ons-status--error`, `ons-status--success`, `ons-status--pending`
 - Typography and spacing utilities: `ons-u-fs-m`, `ons-u-mt-l`, etc.
 

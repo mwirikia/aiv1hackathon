@@ -63,10 +63,19 @@
 
     /* Chat table */
     .chat-table-wrap { margin-top: 10px; overflow-x: auto; }
-    .chat-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; background: #fff; }
-    .chat-table th { text-align: left; padding: 5px 8px; border-bottom: 2px solid #222; background: #f0f0f0; font-size: 0.6875rem; }
-    .chat-table td { padding: 5px 8px; border-bottom: 1px solid #e2e2e3; }
-    .chat-table tr:hover { background: #e8f0f8; }
+    .chat-table-wrap .ons-table {
+      font-size: 0.75rem;
+      margin-bottom: 0;
+    }
+    .chat-table-wrap .ons-table__header {
+      font-size: 0.6875rem;
+      white-space: nowrap;
+    }
+    .chat-table-wrap .ons-table__cell {
+      padding-top: 6px;
+      padding-bottom: 6px;
+      white-space: nowrap;
+    }
     .chat-table-more { font-size: 0.6875rem; color: #707071; margin-top: 4px; }
 
     /* Suggestion chips */
@@ -129,18 +138,19 @@
 
           <!-- Chat interface -->
           <div class="ons-u-mt-l ons-u-mb-xl">
-            <div class="chat-section">
+            <section class="chat-section" aria-label="Dashboard assistant">
               <div class="chat-header">
                 Ask a question<span class="chat-header__sub">about your teams, capacity, workload, or tickets</span>
               </div>
               <div class="chat-messages" id="chat-messages"></div>
-              <div class="chat-input-bar">
+              <div class="chat-input-bar" role="search">
+                <label class="ons-u-vh" for="chat-input">Ask the dashboard assistant</label>
                 <input id="chat-input" class="ons-input ons-input--text" type="text" placeholder="e.g. Do we have capacity for a new programme?" autocomplete="off">
                 <button id="chat-send" class="ons-btn">
                   <span class="ons-btn__inner"><span class="ons-btn__text">Ask</span></span>
                 </button>
               </div>
-            </div>
+            </section>
           </div>
 
         </div>

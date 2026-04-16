@@ -103,10 +103,10 @@ function renderDashboard() {
   });
   h += '</tbody></table></div>';
 
-  // Skills concentration risk — only show over-allocated holders
+  // Single points of failure — only show over-allocated holders
   var criticalSkills = singlePointSkills.filter(s => s.person.total_allocation > 100);
   if (criticalSkills.length > 0) {
-    h += '<h2 class="ons-u-fs-m ons-u-mb-s">Skills Concentration Risk <span style="font-weight:400;color:#707071;font-size:0.875rem">— over-allocated staff who are single points of failure</span></h2>';
+    h += '<h2 class="ons-u-fs-m ons-u-mb-s">Single Points of Failure <span style="font-weight:400;color:#707071;font-size:0.875rem">— over-allocated staff with skills no one else holds</span></h2>';
 
     // Group by team
     var skillsByTeam = new Map();

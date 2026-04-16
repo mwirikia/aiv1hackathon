@@ -51,7 +51,8 @@ function renderDashboard() {
     recs.forEach(r => {
       h += '<div class="rec ' + (r.urgent ? 'rec--urgent' : '') + '">';
       h += '<div class="rec__title">' + r.title + '</div>';
-      h += '<div class="rec__body">' + r.body + '</div></div>';
+      h += '<div class="rec__body">' + r.body + '</div>';
+      h += '</div>';
     });
     h += '<div class="ons-u-mb-l"></div>';
   }
@@ -101,6 +102,56 @@ function renderDashboard() {
     h += '</tr>';
   });
   h += '</tbody></table></div>';
+
+  // Single points of failure — only show over-allocated holders
+  var criticalSkills = singlePointSkills.filter(s => s.person.total_allocation > 100);
+  if (criticalSkills.length > 0) {
+    h += '<h2 class="ons-u-fs-m ons-u-mb-s">Single Points of Failure <span style="font-weight:400;color:#707071;font-size:0.875rem">— over-allocated staff with skills no one else holds</span></h2>';
+
+    // Group by team
+    var skillsByTeam = new Map();
+    criticalSkills.forEach(s => {
+      if (!skillsByTeam.has(s.person.team)) skillsByTeam.set(s.person.team, []);
+      skillsByTeam.get(s.person.team).push(s);
+    });
+
+    h += '<div class="ons-table-scrollable__content ons-u-mb-l"><table class="ons-table">';
+    h += '<thead class="ons-table__head"><tr class="ons-table__row">';
+    ['Team', 'At-Risk Skills', 'Held By', 'Allocation'].forEach(th => {
+      h += '<th class="ons-table__header" scope="col">' + th + '</th>';
+    });
+    h += '</tr></thead><tbody class="ons-table__body">';
+
+    var teamEntries = [...skillsByTeam.entries()].sort((a, b) => {
+      var maxA = Math.max(...a[1].map(s => s.person.total_allocation));
+      var maxB = Math.max(...b[1].map(s => s.person.total_allocation));
+      return maxB - maxA;
+    });
+
+    teamEntries.forEach(([teamName, skills]) => {
+      var byPerson = new Map();
+      skills.forEach(s => {
+        if (!byPerson.has(s.person.employee_id)) byPerson.set(s.person.employee_id, { person: s.person, skills: [] });
+        byPerson.get(s.person.employee_id).skills.push(s.skill);
+      });
+      byPerson.forEach(entry => {
+        h += '<tr class="ons-table__row ons-table__row--warn">';
+        h += '<td class="ons-table__cell"><strong>' + teamName + '</strong></td>';
+        h += '<td class="ons-table__cell">' + entry.skills.map(s => '<span style="display:inline-block;background:#e2e2e3;font-size:0.8125rem;padding:2px 10px;border-radius:3px;margin:2px 4px 2px 0">' + s + '</span>').join('') + '</td>';
+        h += '<td class="ons-table__cell">' + entry.person.name + '</td>';
+        h += '<td class="ons-table__cell">' + barInline(entry.person.total_allocation) + '</td>';
+        h += '</tr>';
+      });
+    });
+
+    h += '</tbody></table></div>';
+
+    // Summary note
+    var otherCount = singlePointSkills.length - criticalSkills.length;
+    if (otherCount > 0) {
+      h += '<p style="font-size:0.875rem;color:#707071;margin-bottom:24px">' + otherCount + ' additional skill' + (otherCount !== 1 ? 's are' : ' is') + ' held by only one person but they are not currently over-allocated.</p>';
+    }
+  }
 
   el.innerHTML = h;
 }

@@ -59,7 +59,7 @@ Open [http://localhost:8080/dashboard.html](http://localhost:8080/dashboard.html
 | `/operations.html` | Head of operations / resource manager | Team pressure rankings, redeployment planner with skills matching and recommendations, automation candidates, workload by team |
 | `/tickets.html` | Operations team / ticket triage | Time-to-live tracking, at-risk ticket cards with TTL countdown bars, open ticket table with team pressure overlay, resolution performance |
 | `/index.html` | All users | Searchable directory of people, teams, skills, and tickets with individual profiles and team overviews |
-| `/team-leader.html` | Team leader | Team selector, health summary, director briefing panel, skills concentration risks, member table, open tickets |
+| `/team-leader.html` | Team leader | Team selector, health summary, director briefing panel, single points of failure, member table, open tickets |
 
 All pages share a consistent ONS Design System navigation bar with the active page highlighted. The floating chat assistant (💬 button, bottom-right) is available on every page.
 
@@ -98,7 +98,7 @@ aiv1hackathon/
 - Team average allocation bar chart
 - Average resolution time by ticket category chart
 - Team breakdown table with allocation bars (including 100% capacity marker), over-allocation counts, spare capacity, and open tickets
-- Flagged recommendations: over-allocation risks, open high-priority tickets, spare capacity opportunities, skills concentration risks
+- Flagged recommendations: over-allocation risks, open high-priority tickets, spare capacity opportunities, single points of failure
 
 ### Operations View
 - Team pressure rankings — combined score from allocation load, over-commitment, and ticket volume

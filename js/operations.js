@@ -91,7 +91,7 @@ function renderOperations() {
   h += opsKpi(candidates.length, 'Available for Redeployment', 'green', '#redeployment-planner');
   h += opsKpi(Store.openTickets.length, 'Open Tickets', 'amber', 'tickets.html');
   h += opsKpi(autoCandidates.filter(c => c.potential === 'high').length, 'High Automation Potential', 'green', '#automation-candidates');
-  h += opsKpi(Store.raw.people.length, 'Total Staff', '', '#workload-by-team');
+  h += opsKpi(Store.raw.people.length, 'Total Staff', '', 'index.html');
   h += '</div>';
 
   // Team Pressure Rankings

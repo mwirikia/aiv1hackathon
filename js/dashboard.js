@@ -56,6 +56,17 @@ function renderDashboard() {
     h += '<div class="ons-u-mb-l"></div>';
   }
 
+  // Open brief feedback panel
+  h += '<h2 class="ons-u-fs-m ons-u-mb-s">Open Brief Feedback (Current Prototype)</h2>';
+  h += '<div class="ons-panel ons-panel--info ons-panel--no-title ons-u-mb-l">';
+  h += '<span class="ons-panel__assistive-text ons-u-vh">Important information: </span>';
+  h += '<div class="ons-panel__body">';
+  h += '<p><strong>What is strong already:</strong> clear user focus (directors and operations leads), joined-up workforce + ticket data, and fast answers to real leadership questions in one screen.</p>';
+  h += '<p><strong>What the data says today:</strong> ' + overAllocated.length + ' over-allocated staff, ' + highOpen.length + ' high-priority open tickets, and ' + singlePointSkills.length + ' single-person skill dependencies.</p>';
+  h += '<p><strong>Gaps to call out honestly:</strong> data freshness assumptions, no explicit confidence indicator per recommendation, and limited scenario testing for “what if we move 2 people?”.</p>';
+  h += '<p><strong>Best next step (still one-day scope):</strong> add a simple redeployment simulator for moving named staff between projects/teams and show the before/after impact on allocation and risk.</p>';
+  h += '</div></div>';
+
   // Charts row
   h += '<div class="chart-row ons-u-mb-l">';
 

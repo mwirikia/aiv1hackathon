@@ -101,6 +101,24 @@ The dashboard uses the [ONS Design System](https://service-manual.ons.gov.uk/des
 - "Show me project staffing"
 - "Which categories take longest to resolve?"
 
+## Open brief feedback on current build
+
+### What is already strong
+
+- Clear primary users: directors, heads of operations, and team leaders
+- A concrete gap is addressed: reducing manual spreadsheet collation into a single joined-up view
+- Demo-ready output: KPI snapshot, risk flags, and natural-language Q&A that can be shown quickly
+
+### Current gaps to acknowledge
+
+- Data freshness and confidence are implied rather than explicitly shown
+- Recommendations are strong but not yet scenario-tested in-app (for example, "move 2 staff and recalculate risk")
+- No explicit assumptions/limitations block in the UI beyond narrative explanation
+
+### High-impact next step (still one-day scope)
+
+Add a lightweight redeployment simulator that lets the demo user move named staff between commitments and instantly see before/after changes in allocation pressure, ticket risk, and single-point skill dependencies.
+
 ## Tech stack
 
 - Vanilla HTML, CSS, JavaScript — no frameworks, no build tools

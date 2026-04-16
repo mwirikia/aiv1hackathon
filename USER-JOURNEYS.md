@@ -34,13 +34,13 @@ All five pages share a consistent navigation bar with the active page highlighte
    - **Open Tickets** → Ticket View
    - **High Priority Open** → Ticket View at-risk tickets
 4. The team allocation chart shows which teams are stretched and which have room
-5. The **Skills Concentration Risk** section flags over-allocated staff who are single points of failure, grouped by team
+5. The **Single Points of Failure** section flags over-allocated staff with skills no one else holds, grouped by team
 6. If they need a specific answer, they click the **💬 chat button** and ask: *"Do we have capacity for a new programme?"*
 7. The chat responds with the number of staff with spare capacity, their combined FTE availability, and a table of names and teams — with deep links to the Staff Finder and Operations View
 8. They ask a follow-up: *"Show me project staffing"* — the chat lists every project with headcount and FTE
 9. The director has a clear, data-backed answer in under two minutes
 
-**Key features used:** Summary banner, clickable KPI cards, team allocation chart, skills concentration risk table, recommendations, chat Q&A with deep links
+**Key features used:** Summary banner, clickable KPI cards, team allocation chart, single points of failure table, recommendations, chat Q&A with deep links
 
 ---
 
@@ -106,12 +106,12 @@ All five pages share a consistent navigation bar with the active page highlighte
    - Recommendation — specific, actionable advice (e.g. "needs additional resource", "rebalance allocations", "monitor closely")
    - Links to the Operations View redeployment planner for cross-team support
 5. The **Team Members** table shows each person's allocation bar with 100% marker, their projects, and role — sorted by allocation so the most stretched are at the top
-6. The **Skills Concentration Risk** table shows single-holder skills within the team, flagging those who are also over-allocated
+6. The **Single Points of Failure** table shows skills held by only one person in the team, flagging those who are also over-allocated
 7. The **Open Tickets** table shows tickets assigned to the team sorted by priority
 8. He shares the URL (`team-leader.html#TeamName`) with his director — the data and recommendation speak for themselves
 9. The director can cross-reference with the **Operations View** pressure rankings to see how this team compares to others
 
-**Key features used:** Team selector, health summary KPIs, director briefing panel with auto-generated recommendation, skills concentration risk, member table with allocation bars, open tickets
+**Key features used:** Team selector, health summary KPIs, director briefing panel with auto-generated recommendation, single points of failure, member table with allocation bars, open tickets
 
 ---
 
@@ -189,7 +189,7 @@ The Director's Dashboard answers multiple questions in under two minutes via the
 
 > "If you can also explain what the data reveals, what you would recommend based on it, and what you would need to go further, that is a strong and credible demo."
 
-- **What the data reveals:** Dashboard recommendations and skills concentration risk, Operations pressure rankings, Ticket TTL tracking
+- **What the data reveals:** Dashboard recommendations and single points of failure, Operations pressure rankings, Ticket TTL tracking
 - **What we recommend:** Operations redeployment planner with actionable recommendations per team, Team Leader director briefing with auto-generated advice, automation candidates
 - **What we would need to go further:** Real-time data feeds from HR/project/ticketing systems, LLM-powered chat for more flexible Q&A, historical trend analysis
 

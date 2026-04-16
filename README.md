@@ -86,16 +86,6 @@ The dashboard uses the [ONS Design System](https://service-manual.ons.gov.uk/des
 - Status badges: `ons-status--error`, `ons-status--success`, `ons-status--pending`
 - Typography and spacing utilities: `ons-u-fs-m`, `ons-u-mt-l`, etc.
 
-## What the data reveals
-
-- **8 of 25 staff** are allocated above 100% — this is spread across nearly every team
-- **Every team lead** is over-allocated (20% team management on top of full project loads)
-- **2 staff** have significant spare capacity (≤60%) and could absorb new work
-- **7 tickets** remain open, including high-priority infrastructure and HR issues
-- **Procurement requests** take ~28 days avg to resolve — the slowest category
-- **Multiple skills** are held by only one person, creating single points of failure
-- **IT Service Desk** is simultaneously over-committed on project work and handling the highest ticket volume — the biggest pressure point
-
 ## Example questions for the chat
 
 - "Give me a summary"
